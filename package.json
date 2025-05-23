@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .ts,.tsx --fix"
   },
   "dependencies": {
+    "axios": "^1.9.0",
     "react": "19.0.0",
     "react-native": "0.79.2"
   },
@@ -30,11 +31,12 @@
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
     "babel-plugin-module-resolver": "^5.0.2",
-    "eslint": "^9.27.0",
+    "eslint": "8",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-native": "^5.0.0",
