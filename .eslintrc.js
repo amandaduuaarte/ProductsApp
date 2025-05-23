@@ -28,7 +28,10 @@ module.exports = {
     'react/prop-types': 'off',
     'react-native/no-inline-styles': 'off',
     'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ['error']
+    '@typescript-eslint/no-use-before-define': ['error'],
+    'import/prefer-default-export': 'off',
+    '@typescript-eslint/lines-between-class-members': 'off',
+    '@typescript-eslint/no-throw-literal': 'off'
   },
   settings: {
     react: {

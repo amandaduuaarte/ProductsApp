@@ -24,7 +24,6 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -79,10 +78,9 @@ function App(): React.JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        style={backgroundStyle}>
+      <ScrollView style={backgroundStyle}>
         <View style={{paddingRight: safePadding}}>
-          <Header/>
+          <Header />
         </View>
         <View
           style={{
@@ -111,21 +109,21 @@ function App(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  highlight: {
+    fontWeight: '700',
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
   },
+  sectionDescription: {
+    fontSize: 18,
+    fontWeight: '400',
+    marginTop: 8,
+  },
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
   },
 });
 
