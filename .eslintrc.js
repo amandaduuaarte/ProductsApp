@@ -31,7 +31,11 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': ['error'],
     'import/prefer-default-export': 'off',
     '@typescript-eslint/lines-between-class-members': 'off',
-    '@typescript-eslint/no-throw-literal': 'off'
+    '@typescript-eslint/no-throw-literal': 'off',
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-use-before-define': 'off',
+    'react-native/no-color-literals': 'off',
+    'react/function-component-definition': 'off'
   },
   settings: {
     react: {
