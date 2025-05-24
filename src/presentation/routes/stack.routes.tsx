@@ -12,6 +12,12 @@ export const StackRoutes = () => (
       headerShown: false,
     }}>
     <Stack.Screen name="Home" component={Home} />
-    <Stack.Screen name="ProductDetails" component={ProductDetails} />
+    <Stack.Screen
+      name="ProductDetails"
+      component={ProductDetails}
+      options={{
+        headerShown: true,
+      }}
+    />
   </Stack.Navigator>
 );

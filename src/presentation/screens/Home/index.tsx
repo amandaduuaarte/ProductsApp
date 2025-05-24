@@ -4,8 +4,8 @@ import {SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {useGetProductsUseCase} from '@domain/useCases/useGetProductsUseCase';
 import {useGetProductsCategoriesUseCase} from '@domain/useCases/useGetProductsCategoriesUseCase';
 
-import {Categories} from './components/categories';
 import {ProductsCarrousel} from './components/productsCarrousel';
+import {Categories} from './components/categories';
 
 export const Home = () => {
   const [searchValue, setSearchValue] = useState<string>();

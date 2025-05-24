@@ -1,4 +1,6 @@
 export type TStackRoutesProps = {
   Home: undefined;
-  ProductDetails: undefined;
+  ProductDetails: {
+    productId: number;
+  };
 };

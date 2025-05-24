@@ -1,20 +1,21 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 type TProductCard = {
   name: string;
   price: number;
   category: string;
   thumbnail: string;
+  onPress: () => void;
 };
 export const ProductCard = (product: TProductCard) => {
-  const {name, price, category, thumbnail} = product;
+  const {name, price, category, thumbnail, onPress} = product;
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text>{name}</Text>
       <Text>{price}</Text>
       <Text>{category}</Text>
       <Image source={{uri: thumbnail}} style={styles.thumbnail} />
-    </View>
+    </TouchableOpacity>
   );
 };
 
