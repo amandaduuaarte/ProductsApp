@@ -1,19 +1,11 @@
-import {useCallback, useState} from 'react';
-import {
-  FlatList,
-  ListRenderItemInfo,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {TProduct} from '@data/schema/products.schema';
+import {useState} from 'react';
+import {SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
+
 import {useGetProductsUseCase} from '@domain/useCases/useGetProductsUseCase';
 import {useGetProductsCategoriesUseCase} from '@domain/useCases/useGetProductsCategoriesUseCase';
-import {TProductCategory} from '@data/schema/productsCategories.schema';
-import {ProductCard} from './components/productCard';
+
+import {Categories} from './components/categories';
+import {ProductsCarrousel} from './components/productsCarrousel';
 
 export const Home = () => {
   const [searchValue, setSearchValue] = useState<string>();
@@ -21,26 +13,6 @@ export const Home = () => {
   const {products} = useGetProductsUseCase();
   const {categories} = useGetProductsCategoriesUseCase({limit: 4});
 
-  const renderProductCard = useCallback(
-    ({item}: ListRenderItemInfo<TProduct>) => (
-      <ProductCard
-        name={item.title}
-        category={item.category}
-        price={item.price}
-        thumbnail={item.thumbnail}
-      />
-    ),
-    [],
-  );
-
-  const renderCategoryCard = useCallback(
-    ({item}: ListRenderItemInfo<TProductCategory>) => (
-      <TouchableOpacity style={styles.categoryContainer}>
-        <Text>{item.name}</Text>
-      </TouchableOpacity>
-    ),
-    [],
-  );
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.content}>
@@ -49,49 +21,21 @@ export const Home = () => {
           style={styles.textField}
           onChangeText={setSearchValue}
           value={searchValue}
-          placeholder="useless placeholder"
+          placeholder="Fragrances"
           keyboardType="default"
         />
 
-        <FlatList
-          horizontal
-          data={products?.products}
-          renderItem={renderProductCard}
-          showsHorizontalScrollIndicator={false}
-          ListEmptyComponent={<View />}
-        />
+        <ProductsCarrousel products={products} />
 
         <Text>Some categories</Text>
 
-        <FlatList
-          numColumns={2}
-          data={categories}
-          renderItem={renderCategoryCard}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.categories}
-          columnWrapperStyle={styles.categories}
-          bounces={false}
-        />
+        <Categories categories={categories} />
       </SafeAreaView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  categories: {
-    gap: 24,
-    rowGap: 24,
-  },
-  categoryContainer: {
-    alignItems: 'center',
-    borderColor: 'blue',
-    borderRadius: 12,
-    borderWidth: 1,
-    height: 164,
-    justifyContent: 'center',
-    padding: 12,
-    width: '45%',
-  },
   container: {
     flex: 1,
     margin: 24,
