@@ -5,8 +5,8 @@
       "paths": {
         "@presentation/*": ["presentation/*"],
         "@domain/*": ["domain/*"],
-        "@infra/*": ["infra/*"],
-        "@shared/*": ["shared/*"]
+        "@data/*": ["data/*"],
+        "@lib/*": ["lib/*"]
       }
     }
 }

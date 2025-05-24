@@ -5,7 +5,7 @@ import type {TStackRoutesProps} from './types';
 const Stack = createStackNavigator<TStackRoutesProps>();
 
 export const StackRoutes = () => (
-  <Stack.Group>
+  <Stack.Navigator initialRouteName="Home">
     <Stack.Screen name="Home" component={Home} />
-  </Stack.Group>
+  </Stack.Navigator>
 );

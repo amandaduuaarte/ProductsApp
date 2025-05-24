@@ -8,10 +8,10 @@ module.exports = {
         alias: {
           '@presentation': './src/presentation',
           '@domain': './src/domain',
-          '@infra': './src/infra',
-          '@shared': './src/shared'
-        }
-      }
-    ]
-  ]
+          '@data': './src/data',
+          '@lib': './src/lib',
+        },
+      },
+    ],
+  ],
 };
