@@ -1,14 +1,25 @@
-import {getProductsFn} from '@data/queryFn/getProducts';
-import {useQuery} from '@tanstack/react-query';
+import {getProductsFn, TProductsSearchProp} from '@data/queryFn/getProducts';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
 export const PRODUCTS_QUERY_KEY = 'PRODUCTS_KEY';
-const FIVE_MINUTES = 5 * 60 * 1000;
+export const PRODUCTS_SEARCHED_QUERY_KEY = 'PRODUCTS_SEARCH_KEY';
 
-const {get} = getProductsFn();
+const {get, searchProductsFn} = getProductsFn();
 
-export const getProductsService = () =>
+export const getProducts = () =>
   useQuery({
     queryFn: get,
     queryKey: [PRODUCTS_QUERY_KEY],
-    staleTime: FIVE_MINUTES,
   });
+
+export const searchProducts = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({search}: {search: TProductsSearchProp}) =>
+      searchProductsFn({search}),
+    mutationKey: [PRODUCTS_SEARCHED_QUERY_KEY],
+    onSuccess: products => {
+      queryClient.setQueryData([PRODUCTS_QUERY_KEY], products);
+    },
+  });
+};

@@ -35,7 +35,8 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     'react-native/no-color-literals': 'off',
-    'react/function-component-definition': 'off'
+    'react/function-component-definition': 'off',
+    'arrow-body-style': 'off'
   },
   settings: {
     react: {

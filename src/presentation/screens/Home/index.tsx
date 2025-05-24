@@ -1,17 +1,22 @@
-import {useState} from 'react';
 import {SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
 
 import {useGetProductsUseCase} from '@domain/useCases/useGetProductsUseCase';
 import {useGetProductsCategoriesUseCase} from '@domain/useCases/useGetProductsCategoriesUseCase';
 
+import {useSearchProductsUseCase} from '@domain/useCases/useSearchProductsUseCase';
+import {useCallback} from 'react';
+
 import {ProductsCarrousel} from './components/productsCarrousel';
 import {Categories} from './components/categories';
 
 export const Home = () => {
-  const [searchValue, setSearchValue] = useState<string>();
-
-  const {products} = useGetProductsUseCase();
+  const {searchProducts} = useSearchProductsUseCase();
   const {categories} = useGetProductsCategoriesUseCase({limit: 4});
+  const {products} = useGetProductsUseCase();
+
+  const handleSearchProducts = useCallback((value: string) => {
+    searchProducts({search: value});
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -19,10 +24,9 @@ export const Home = () => {
         <Text style={styles.title}>Products App</Text>
         <TextInput
           style={styles.textField}
-          onChangeText={setSearchValue}
-          value={searchValue}
+          onChangeText={handleSearchProducts}
           placeholder="Fragrances"
-          keyboardType="default"
+          keyboardType="decimal-pad"
         />
 
         <ProductsCarrousel products={products} />
