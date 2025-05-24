@@ -1,6 +1,6 @@
 import {getProductsService} from '@data/services/getProductsService';
 
-export const useGetProducts = () => {
+export const useGetProductsUseCase = () => {
   const {data, isError, isLoading, isRefetching} = getProductsService();
-  return {data, isError, isLoading, isRefetching};
+  return {products: data, isError, isLoading, isRefetching};
 };

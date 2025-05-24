@@ -1,9 +1,9 @@
-import {productsResponseSchema} from '@data/schema/products.schema';
+import {productsResponseSchema, TProducts} from '@data/schema/products.schema';
 import {httpClient} from '@lib/httpClient/axios';
 
 const {api} = httpClient();
 export const getProductsFn = () => {
-  const get = async () => {
+  const get = async (): Promise<TProducts | undefined> => {
     try {
       const response = await api.get('/products');
 

@@ -53,4 +53,5 @@ export const productsResponseSchema = z.object({
   limit: z.number(),
 });
 
+export type TProduct = z.infer<typeof productSchema>;
 export type TProducts = z.infer<typeof productsResponseSchema>;
