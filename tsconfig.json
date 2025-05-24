@@ -6,7 +6,8 @@
         "@presentation/*": ["presentation/*"],
         "@domain/*": ["domain/*"],
         "@data/*": ["data/*"],
-        "@lib/*": ["lib/*"]
+        "@lib/*": ["lib/*"],
+        "@assets/*": ["assets/*"]
       }
     }
 }

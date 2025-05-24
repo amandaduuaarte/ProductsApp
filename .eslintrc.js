@@ -36,7 +36,8 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     'react-native/no-color-literals': 'off',
     'react/function-component-definition': 'off',
-    'arrow-body-style': 'off'
+    'arrow-body-style': 'off',
+    '@typescript-eslint/no-require-imports': 'off'
   },
   settings: {
     react: {
