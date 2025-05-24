@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 
-export const Categories = ({
+export const CategoriesList = ({
   categories,
 }: {
   categories: TProductsCategories | undefined;

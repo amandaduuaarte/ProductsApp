@@ -3,4 +3,5 @@ export type TStackRoutesProps = {
   ProductDetails: {
     productId: number;
   };
+  Categories: undefined;
 };

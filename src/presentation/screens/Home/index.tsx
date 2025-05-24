@@ -14,8 +14,14 @@ import {useGetProductsCategoriesUseCase} from '@domain/useCases/useGetProductsCa
 import {useSearchProductsUseCase} from '@domain/useCases/useSearchProductsUseCase';
 import {useCallback} from 'react';
 
+import {TStackRoutesProps} from '@presentation/routes/types';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
+
+import {CategoriesList} from '@presentation/shared/components/categoriesList';
 import {ProductsCarrousel} from './components/productsCarrousel';
-import {Categories} from './components/categories';
+
+type THomeNavigationProp = StackNavigationProp<TStackRoutesProps, 'Home'>;
 
 const filterIcon = require('@assets/icons/filter.png');
 
@@ -24,8 +30,14 @@ export const Home = () => {
   const {categories} = useGetProductsCategoriesUseCase({limit: 4});
   const {products} = useGetProductsUseCase();
 
+  const {navigate} = useNavigation<THomeNavigationProp>();
+
   const handleSearchProducts = useCallback((value: string) => {
     searchProducts({search: value});
+  }, []);
+
+  const navigateToCategoriesScreen = useCallback(() => {
+    navigate('Categories');
   }, []);
 
   return (
@@ -45,14 +57,25 @@ export const Home = () => {
         </View>
 
         <ProductsCarrousel products={products} />
-        <Text>Some categories</Text>
-        <Categories categories={categories} />
+
+        <View style={styles.categories}>
+          <Text>Some categories</Text>
+          <TouchableOpacity onPress={navigateToCategoriesScreen}>
+            <Text style={styles.seeMoreButton}>See More</Text>
+          </TouchableOpacity>
+        </View>
+
+        <CategoriesList categories={categories} />
       </SafeAreaView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  categories: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   container: {
     flex: 1,
     margin: 24,
@@ -69,6 +92,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  seeMoreButton: {
+    color: 'blue',
   },
   textField: {
     borderColor: 'blue',
