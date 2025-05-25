@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useCallback} from 'react';
 
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 type TCategoriesNavigationProp = StackNavigationProp<
   TStackRoutesProps,
@@ -22,8 +22,6 @@ export const Categories = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Categories</Text>
-
       <CategoriesList
         categories={categories}
         selectCategory={handleSelectedCategory}
@@ -34,6 +32,7 @@ export const Categories = () => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#ffffff',
     flex: 1,
     gap: 12,
     padding: 24,

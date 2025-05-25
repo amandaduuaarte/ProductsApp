@@ -23,8 +23,8 @@ export const ProductsCarrousel = ({
     ({item}: ListRenderItemInfo<TProduct>) => (
       <ProductCard
         name={item.title}
-        category={item.category}
         price={item.price}
+        category={item.category}
         thumbnail={item.thumbnail}
         onPress={() => handleNavigationToDetailsScreen({id: item.id})}
       />

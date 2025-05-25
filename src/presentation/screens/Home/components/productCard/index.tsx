@@ -1,5 +1,5 @@
 import {formatter} from '@domain/utils/formatterMoney';
-import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 type TProductCard = {
   name: string;
@@ -16,13 +16,17 @@ export const ProductCard = (product: TProductCard) => {
   const priceFormatted = formatterMoney(price);
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Image source={{uri: thumbnail}} style={styles.thumbnail} />
-      <Text style={styles.title}>{name}</Text>
+    <View>
+      <TouchableOpacity style={styles.container} onPress={onPress}>
+        <Image source={{uri: thumbnail}} style={styles.thumbnail} />
+        <Text style={styles.title} numberOfLines={2}>
+          {name}
+        </Text>
 
-      <Text style={styles.text}>Price: {priceFormatted}</Text>
-      <Text style={styles.text}>Category: {category}</Text>
-    </TouchableOpacity>
+        <Text style={styles.text}>Price: {priceFormatted}</Text>
+        <Text style={styles.text}>Category: {category}</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 

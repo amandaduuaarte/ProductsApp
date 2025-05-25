@@ -20,18 +20,28 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
 
 import {CategoriesList} from '@presentation/shared/components/categoriesList';
+import {RetryView} from '@presentation/shared/components/retryView';
 import {ProductsCarrousel} from './components/productsCarrousel';
+import {LoadingView} from './components/loadingView';
 
 type THomeNavigationProp = StackNavigationProp<TStackRoutesProps, 'Home'>;
 
 const filterIcon = require('@assets/icons/filter.png');
 
 export const Home = () => {
-  const {searchProducts} = useSearchProductsUseCase();
+  const {searchProducts, isError: isSearchProductsError} =
+    useSearchProductsUseCase();
   const {categories} = useGetProductsCategoriesUseCase({limit: 4});
-  const {products} = useGetProductsUseCase();
+  const {
+    products,
+    refetch,
+    isError: isProductsError,
+    isLoading: isProductsLoading,
+  } = useGetProductsUseCase();
 
   const {navigate} = useNavigation<THomeNavigationProp>();
+
+  const isError = isSearchProductsError || isProductsError;
 
   const handleSearchProducts = useCallback((value: string) => {
     searchProducts({search: value});
@@ -44,6 +54,10 @@ export const Home = () => {
   const handleSelectedCategory = useCallback((category: string) => {
     navigate('ProductsList', {category});
   }, []);
+
+  if (isProductsLoading) return <LoadingView />;
+
+  if (isError) return <RetryView actionButton={refetch} />;
 
   return (
     <View style={styles.container}>
