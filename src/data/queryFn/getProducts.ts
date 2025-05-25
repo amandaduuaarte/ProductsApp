@@ -6,7 +6,7 @@ export type TProductsSearchProp = string;
 const {api} = httpClient();
 
 export const getProductsFn = () => {
-  const get = async (): Promise<TProducts | undefined> => {
+  const getProducts = async (): Promise<TProducts | undefined> => {
     try {
       const response = await api.get('/products');
 
@@ -19,7 +19,7 @@ export const getProductsFn = () => {
     }
   };
 
-  const searchProductsFn = async ({
+  const searchProducts = async ({
     search,
   }: {
     search: TProductsSearchProp;
@@ -36,5 +36,22 @@ export const getProductsFn = () => {
     }
   };
 
-  return {get, searchProductsFn};
+  const getProductsByCategory = async ({
+    category = 'smartphones',
+  }: {
+    category: string;
+  }): Promise<TProducts | undefined> => {
+    try {
+      const response = await api.get(`/products/category/${category}`);
+
+      productsResponseSchema.parse(response.data);
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  };
+
+  return {getProducts, searchProducts, getProductsByCategory};
 };

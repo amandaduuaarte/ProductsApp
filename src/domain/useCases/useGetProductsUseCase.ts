@@ -1,7 +1,7 @@
-import {getProducts} from '@data/services/getProductsService';
+import {getProductsService} from '@data/services/getProductsService';
 
 export const useGetProductsUseCase = () => {
-  const {data, isError, isLoading, isRefetching} = getProducts();
+  const {data, isError, isLoading, isRefetching} = getProductsService();
 
   return {products: data, isError, isLoading, isRefetching};
 };

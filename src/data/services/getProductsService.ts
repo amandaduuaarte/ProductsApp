@@ -3,23 +3,35 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
 export const PRODUCTS_QUERY_KEY = 'PRODUCTS_KEY';
 export const PRODUCTS_SEARCHED_QUERY_KEY = 'PRODUCTS_SEARCH_KEY';
+export const PRODUCTS_BY_CATEGORY_QUERY_KEY = 'PRODUCTS_BY_CATEGORY_KEY';
 
-const {get, searchProductsFn} = getProductsFn();
+const {getProducts, searchProducts, getProductsByCategory} = getProductsFn();
 
-export const getProducts = () =>
+export const getProductsService = () =>
   useQuery({
-    queryFn: get,
+    queryFn: getProducts,
     queryKey: [PRODUCTS_QUERY_KEY],
   });
 
-export const searchProducts = () => {
+export const searchProductsService = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({search}: {search: TProductsSearchProp}) =>
-      searchProductsFn({search}),
+      searchProducts({search}),
     mutationKey: [PRODUCTS_SEARCHED_QUERY_KEY],
     onSuccess: products => {
       queryClient.setQueryData([PRODUCTS_QUERY_KEY], products);
     },
+  });
+};
+
+export const getProductsByCategoryService = ({
+  category,
+}: {
+  category: string;
+}) => {
+  return useQuery({
+    queryFn: () => getProductsByCategory({category}),
+    queryKey: [PRODUCTS_BY_CATEGORY_QUERY_KEY, category],
   });
 };

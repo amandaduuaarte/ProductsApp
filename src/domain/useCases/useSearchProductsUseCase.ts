@@ -1,7 +1,7 @@
-import {searchProducts} from '@data/services/getProductsService';
+import {searchProductsService} from '@data/services/getProductsService';
 
 export const useSearchProductsUseCase = () => {
-  const {mutate, isError} = searchProducts();
+  const {mutate, isError} = searchProductsService();
 
   return {searchProducts: mutate, isError};
 };

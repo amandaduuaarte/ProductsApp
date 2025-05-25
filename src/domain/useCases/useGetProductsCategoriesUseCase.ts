@@ -1,4 +1,4 @@
-import {getProductsCategoriesService} from '@data/services/getProductsCategories';
+import {getProductsCategoriesService} from '@data/services/getProductsCategoriesService';
 
 export const useGetProductsCategoriesUseCase = ({limit}: {limit?: number}) => {
   const {data, isLoading, isError, isRefetching} = getProductsCategoriesService(

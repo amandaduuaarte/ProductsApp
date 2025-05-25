@@ -12,14 +12,23 @@ import {
   View,
 } from 'react-native';
 
+type TProductCategoriesProps = {
+  categories: TProductsCategories | undefined;
+  selectCategory: (category: string) => void;
+};
 export const CategoriesList = ({
   categories,
-}: {
-  categories: TProductsCategories | undefined;
-}) => {
+  selectCategory,
+}: TProductCategoriesProps) => {
+  const handleSelectedCategory = useCallback((category: string) => {
+    selectCategory(category);
+  }, []);
+
   const renderCategoryCard = useCallback(
     ({item}: ListRenderItemInfo<TProductCategory>) => (
-      <TouchableOpacity style={styles.categoryContainer}>
+      <TouchableOpacity
+        style={styles.categoryContainer}
+        onPress={() => handleSelectedCategory(item.name)}>
         <Text>{item.name}</Text>
       </TouchableOpacity>
     ),
