@@ -2,6 +2,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Home} from '@presentation/screens/Home';
 import {ProductDetails} from '@presentation/screens/ProductDetails';
 import {Categories} from '@presentation/screens/Categories';
+import {ProductsList} from '@presentation/screens/ProductsList';
 import type {TStackRoutesProps} from './types';
 
 const Stack = createStackNavigator<TStackRoutesProps>();
@@ -23,6 +24,13 @@ export const StackRoutes = () => (
     <Stack.Screen
       name="Categories"
       component={Categories}
+      options={{
+        headerShown: true,
+      }}
+    />
+    <Stack.Screen
+      name="ProductsList"
+      component={ProductsList}
       options={{
         headerShown: true,
       }}

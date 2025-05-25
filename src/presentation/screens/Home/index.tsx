@@ -40,6 +40,10 @@ export const Home = () => {
     navigate('Categories');
   }, []);
 
+  const handleSelectedCategory = useCallback((category: string) => {
+    navigate('ProductsList', {category});
+  }, []);
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.content}>
@@ -65,7 +69,10 @@ export const Home = () => {
           </TouchableOpacity>
         </View>
 
-        <CategoriesList categories={categories} />
+        <CategoriesList
+          categories={categories}
+          selectCategory={handleSelectedCategory}
+        />
       </SafeAreaView>
     </View>
   );

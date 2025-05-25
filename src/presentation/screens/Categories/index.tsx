@@ -1,30 +1,33 @@
-import {useGetProductsByCategoryUseCase} from '@domain/useCases/useGetProductsByCategoryUseCase';
 import {useGetProductsCategoriesUseCase} from '@domain/useCases/useGetProductsCategoriesUseCase';
+import {TStackRoutesProps} from '@presentation/routes/types';
 import {CategoriesList} from '@presentation/shared/components/categoriesList';
-import {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useCallback} from 'react';
+
 import {StyleSheet, Text, View} from 'react-native';
 
+type TCategoriesNavigationProp = StackNavigationProp<
+  TStackRoutesProps,
+  'Categories'
+>;
 export const Categories = () => {
-  const [selectedCategory, setSelectedCategory] =
-    useState<string>('smartphones');
   const {categories} = useGetProductsCategoriesUseCase({});
-  const {productsByCategory} = useGetProductsByCategoryUseCase({
-    category: selectedCategory,
-  });
 
-  console.log(productsByCategory);
+  const {navigate} = useNavigation<TCategoriesNavigationProp>();
+
+  const handleSelectedCategory = useCallback((category: string) => {
+    navigate('ProductsList', {category});
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text>Categories</Text>
 
-      {productsByCategory ? (
-        <View />
-      ) : (
-        <CategoriesList
-          categories={categories}
-          selectCategory={setSelectedCategory}
-        />
-      )}
+      <CategoriesList
+        categories={categories}
+        selectCategory={handleSelectedCategory}
+      />
     </View>
   );
 };
