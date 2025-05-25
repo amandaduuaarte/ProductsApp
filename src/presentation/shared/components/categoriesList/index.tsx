@@ -31,7 +31,7 @@ export const CategoriesList = ({
       <TouchableOpacity
         style={styles.categoryContainer}
         onPress={() => handleSelectedCategory(item.name)}>
-        <Text>{item.name}</Text>
+        <Text style={styles.categoryName}>{item.name}</Text>
       </TouchableOpacity>
     ),
     [],
@@ -58,12 +58,18 @@ const styles = StyleSheet.create({
   },
   categoryContainer: {
     alignItems: 'center',
-    borderColor: 'blue',
+    backgroundColor: '#84a59d',
+    borderColor: '#415a77',
     borderRadius: 12,
-    borderWidth: 1,
+    borderWidth: 2,
     height: 164,
     justifyContent: 'center',
     padding: 12,
     width: '45%',
+  },
+  categoryName: {
+    color: '#2b2d42',
+    fontSize: 20,
+    fontWeight: 400,
   },
 });

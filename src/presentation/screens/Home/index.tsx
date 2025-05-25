@@ -65,7 +65,7 @@ export const Home = () => {
           <ProductsCarrousel products={products} />
 
           <View style={styles.categories}>
-            <Text>Some categories</Text>
+            <Text style={styles.categoriesText}>Categories</Text>
             <TouchableOpacity onPress={navigateToCategoriesScreen}>
               <Text style={styles.seeMoreButton}>See More</Text>
             </TouchableOpacity>
@@ -87,17 +87,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  categoriesText: {
+    color: '#219ebc',
+    fontSize: 18,
+    fontWeight: 700,
+  },
   container: {
+    backgroundColor: '#ffffff',
     flex: 1,
-    margin: 24,
-    paddingBottom: 24,
   },
   content: {
     gap: 24,
+    margin: 24,
+    paddingBottom: 24,
   },
   filterIcon: {
     height: 32,
-    tintColor: 'blue',
+    tintColor: '#023047',
     width: 32,
   },
   searchContainer: {
@@ -106,17 +112,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   seeMoreButton: {
-    color: 'blue',
+    color: '#415a77',
   },
   textField: {
-    borderColor: 'blue',
+    borderColor: '#219ebc',
     borderRadius: 12,
-    borderWidth: 1,
+    borderWidth: 2,
     padding: 24,
     width: '85%',
   },
   title: {
-    color: 'blue',
+    color: '#219ebc',
     fontSize: 18,
+    fontWeight: '700',
   },
 });

@@ -28,7 +28,7 @@ export const ProductCard = (product: TProductCard) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: 'blue',
+    borderColor: '#415a77',
     borderRadius: 8,
     borderWidth: 2,
     height: 300,
