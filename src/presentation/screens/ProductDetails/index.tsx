@@ -29,7 +29,7 @@ export const ProductDetails = ({route}: Props) => {
 
   const isLoading = isRefetching || isLoadingProductDetails;
 
-  if (!isLoading) return <LoadingView />;
+  if (isLoading) return <LoadingView />;
 
   if (isError) return <RetryView actionButton={refetch} />;
 

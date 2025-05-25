@@ -5,9 +5,8 @@ export const useGetProductsByCategoryUseCase = ({
 }: {
   category: string;
 }) => {
-  const {data, isLoading, isError, isRefetching} = getProductsByCategoryService(
-    {category},
-  );
+  const {data, isLoading, isError, isRefetching, refetch} =
+    getProductsByCategoryService({category});
 
-  return {productsByCategory: data, isLoading, isError, isRefetching};
+  return {productsByCategory: data, isLoading, isError, isRefetching, refetch};
 };

@@ -1,7 +1,22 @@
+import {TProduct} from '@data/schema/products.schema';
 import {useGetProductsByCategoryUseCase} from '@domain/useCases/useGetProductsByCategoryUseCase';
+import {formatter} from '@domain/utils/formatterMoney';
 import {TStackRoutesProps} from '@presentation/routes/types';
-import {RouteProp} from '@react-navigation/native';
-import {FlatList, View} from 'react-native';
+import {EmptyView} from '@presentation/shared/components/emptyView';
+import {RetryView} from '@presentation/shared/components/retryView';
+import {RouteProp, useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useCallback} from 'react';
+import {
+  FlatList,
+  Image,
+  ListRenderItemInfo,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {LoadingView} from './components/loadingView';
 
 type ProductDetailsScreenRouteProp = RouteProp<
   TStackRoutesProps,
@@ -12,14 +27,105 @@ type Props = {
   route: ProductDetailsScreenRouteProp;
 };
 
+type THomeNavigationProp = StackNavigationProp<
+  TStackRoutesProps,
+  'ProductsList'
+>;
+
 export const ProductsList = ({route}: Props) => {
   const {category} = route.params;
-  const {productsByCategory} = useGetProductsByCategoryUseCase({
+  const {navigate} = useNavigation<THomeNavigationProp>();
+
+  const {
+    productsByCategory,
+    isLoading: isLoadingProducts,
+    isError,
+    refetch,
+    isRefetching,
+  } = useGetProductsByCategoryUseCase({
     category,
   });
+  const {formatterMoney} = formatter;
 
-  console.log(JSON.stringify(productsByCategory));
+  const handleNavigationToDetailsScreen = useCallback(({id}: {id: number}) => {
+    navigate('ProductDetails', {productId: id});
+  }, []);
+
+  const isLoading = isLoadingProducts || isRefetching;
+
+  const renderProductCard = ({item}: ListRenderItemInfo<TProduct>) => {
+    return (
+      <TouchableOpacity
+        style={styles.content}
+        onPress={() => handleNavigationToDetailsScreen({id: item.id})}>
+        <Image source={{uri: item.thumbnail}} style={styles.thumbnail} />
+
+        <View style={{width: '70%'}}>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.title}>
+            {item.title}
+          </Text>
+
+          <Text style={styles.price}>{formatterMoney(item.price)}</Text>
+
+          <Text
+            numberOfLines={2}
+            style={styles.description}
+            ellipsizeMode="tail">
+            {item.description}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  if (isLoading) return <LoadingView />;
+
+  if (isError) return <RetryView actionButton={refetch} />;
+
   return (
-    <FlatList data={productsByCategory?.products} renderItem={() => <View />} />
+    <View style={styles.productList}>
+      <FlatList
+        data={productsByCategory?.products}
+        renderItem={renderProductCard}
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={<EmptyView />}
+      />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 24,
+    padding: 24,
+  },
+  content: {
+    borderColor: '#415a77',
+    borderRadius: 12,
+    borderWidth: 1,
+    flexDirection: 'row',
+    paddingVertical: 8,
+  },
+  description: {
+    marginTop: 12,
+  },
+  price: {
+    color: '#001d3d',
+    fontSize: 16,
+    fontWeight: 700,
+    marginTop: 8,
+  },
+  productList: {
+    backgroundColor: '#ffffff',
+    flex: 1,
+  },
+  thumbnail: {
+    height: 100,
+    width: 100,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 700,
+  },
+});
