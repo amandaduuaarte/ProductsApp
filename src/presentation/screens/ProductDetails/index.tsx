@@ -1,8 +1,11 @@
 import {useGetProductDetailsUseCase} from '@domain/useCases/useGetProductDetailsUseCase';
+import {formatter} from '@domain/utils/formatterMoney';
 import {TStackRoutesProps} from '@presentation/routes/types';
+import {RetryView} from '@presentation/shared/components/retryView';
 import {RouteProp} from '@react-navigation/native';
 
 import {Image, StyleSheet, Text, View} from 'react-native';
+import {LoadingView} from './components/loadingView';
 
 type ProductDetailsScreenRouteProp = RouteProp<
   TStackRoutesProps,
@@ -14,40 +17,95 @@ type Props = {
 };
 export const ProductDetails = ({route}: Props) => {
   const {productId} = route.params;
+  const {formatterMoney} = formatter;
 
-  const {productDetails, isRefetching, isError, isLoading} =
-    useGetProductDetailsUseCase({id: productId ?? 0});
+  const {
+    productDetails,
+    isRefetching,
+    isError,
+    isLoading: isLoadingProductDetails,
+    refetch,
+  } = useGetProductDetailsUseCase({id: productId ?? 0});
+
+  const isLoading = isRefetching || isLoadingProductDetails;
+
+  if (!isLoading) return <LoadingView />;
+
+  if (isError) return <RetryView actionButton={refetch} />;
 
   return (
-    <View>
-      <Text>Details</Text>
-
+    <View style={styles.container}>
       <Image source={{uri: productDetails?.thumbnail}} style={styles.image} />
 
-      <Text>Name:</Text>
-      <Text>{productDetails?.title}</Text>
+      <Text style={styles.title} numberOfLines={2}>
+        {productDetails?.title}
+      </Text>
 
-      <Text>Description:</Text>
-      <Text>{productDetails?.description}</Text>
+      <Text style={styles.value}>{productDetails?.description}</Text>
 
-      <Text>Price:</Text>
-      <Text>{productDetails?.price}</Text>
+      <View style={styles.priceContainer}>
+        <Text style={styles.price}>
+          {formatterMoney(productDetails?.price ?? 0)}
+        </Text>
 
-      <Text>Brad:</Text>
-      <Text>{productDetails?.brand}</Text>
+        <View style={styles.availability}>
+          <Text style={styles.label}>Stock availability:</Text>
+          <Text style={styles.value}>{productDetails?.stock}</Text>
+        </View>
+      </View>
 
-      <Text>Stock availability:</Text>
-      <Text>{productDetails?.stock}</Text>
+      <View style={styles.tag}>
+        <Text style={styles.value}>Brand: {productDetails?.brand}</Text>
+      </View>
 
-      <Text>Rating:</Text>
-      <Text>{productDetails?.rating}</Text>
+      <View style={styles.tag}>
+        <Text style={styles.label}>Rating:</Text>
+        <Text style={styles.value}>{productDetails?.rating} ★</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  availability: {
+    backgroundColor: '#cae9ff',
+    borderRadius: 8,
+    flexDirection: 'row',
+    gap: 8,
+    padding: 12,
+  },
+  container: {
+    backgroundColor: '#ffffff',
+    flex: 1,
+    gap: 12,
+    padding: 24,
+  },
   image: {
-    height: 120,
-    width: 120,
+    alignSelf: 'center',
+    height: 200,
+    width: 200,
+  },
+  label: {
+    fontSize: 16,
+  },
+  price: {
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  priceContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  tag: {
+    backgroundColor: '#f7c59f',
+    borderRadius: 8,
+    padding: 12,
+  },
+  title: {
+    fontSize: 24,
+  },
+  value: {
+    fontSize: 18,
   },
 });

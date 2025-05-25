@@ -18,6 +18,8 @@ export const StackRoutes = () => (
       name="ProductDetails"
       component={ProductDetails}
       options={{
+        title: 'Product Details',
+        headerBackTitle: '',
         headerShown: true,
       }}
     />
@@ -25,6 +27,8 @@ export const StackRoutes = () => (
       name="Categories"
       component={Categories}
       options={{
+        title: 'Categories',
+        headerBackTitle: '',
         headerShown: true,
       }}
     />
@@ -32,6 +36,8 @@ export const StackRoutes = () => (
       name="ProductsList"
       component={ProductsList}
       options={{
+        title: 'Products List',
+        headerBackTitle: '',
         headerShown: true,
       }}
     />
