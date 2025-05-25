@@ -1,4 +1,4 @@
-import {FlatList, ListRenderItemInfo, View} from 'react-native';
+import {FlatList, ListRenderItemInfo, StyleSheet, View} from 'react-native';
 import {TProduct, TProducts} from '@data/schema/products.schema';
 import {useCallback} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -39,6 +39,13 @@ export const ProductsCarrousel = ({
       renderItem={renderProductCard}
       showsHorizontalScrollIndicator={false}
       ListEmptyComponent={<View />}
+      contentContainerStyle={styles.container}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 12,
+  },
+});

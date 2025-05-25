@@ -1,3 +1,4 @@
+import {formatter} from '@domain/utils/formatterMoney';
 import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 type TProductCard = {
@@ -7,22 +8,43 @@ type TProductCard = {
   thumbnail: string;
   onPress: () => void;
 };
+
 export const ProductCard = (product: TProductCard) => {
   const {name, price, category, thumbnail, onPress} = product;
+  const {formatterMoney} = formatter;
+
+  const priceFormatted = formatterMoney(price);
+
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Text>{name}</Text>
-      <Text>{price}</Text>
-      <Text>{category}</Text>
       <Image source={{uri: thumbnail}} style={styles.thumbnail} />
+      <Text style={styles.title}>{name}</Text>
+
+      <Text style={styles.text}>Price: {priceFormatted}</Text>
+      <Text style={styles.text}>Category: {category}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    borderColor: 'blue',
+    borderRadius: 8,
+    borderWidth: 2,
+    height: 300,
+    justifyContent: 'space-between',
+    paddingHorizontal: 8,
+    paddingVertical: 12,
+    width: 200,
+  },
+  text: {
+    textTransform: 'capitalize',
+  },
   thumbnail: {
-    height: 45,
-    width: 45,
+    height: 130,
+    width: 130,
+  },
+  title: {
+    fontSize: 18,
   },
 });

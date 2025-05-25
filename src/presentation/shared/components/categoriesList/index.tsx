@@ -15,8 +15,10 @@ import {
 type TProductCategoriesProps = {
   categories: TProductsCategories | undefined;
   selectCategory: (category: string) => void;
+  scrollEnabled?: boolean;
 };
 export const CategoriesList = ({
+  scrollEnabled = true,
   categories,
   selectCategory,
 }: TProductCategoriesProps) => {
@@ -43,8 +45,8 @@ export const CategoriesList = ({
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.categories}
       columnWrapperStyle={styles.categories}
-      bounces={false}
       ListEmptyComponent={<View />}
+      scrollEnabled={scrollEnabled}
     />
   );
 };

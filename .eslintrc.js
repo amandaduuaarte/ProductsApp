@@ -37,7 +37,8 @@ module.exports = {
     'react-native/no-color-literals': 'off',
     'react/function-component-definition': 'off',
     'arrow-body-style': 'off',
-    '@typescript-eslint/no-require-imports': 'off'
+    '@typescript-eslint/no-require-imports': 'off',
+    'react/require-default-props': 'off'
   },
   settings: {
     react: {

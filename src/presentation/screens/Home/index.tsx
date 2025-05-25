@@ -1,6 +1,7 @@
 import {
   Image,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -46,34 +47,37 @@ export const Home = () => {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView style={styles.content}>
-        <Text style={styles.title}>Products App</Text>
-        <View style={styles.searchContainer}>
-          <TextInput
-            style={styles.textField}
-            onChangeText={handleSearchProducts}
-            placeholder="Fragrances"
-            keyboardType="decimal-pad"
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <SafeAreaView style={styles.content}>
+          <Text style={styles.title}>Products App</Text>
+          <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.textField}
+              onChangeText={handleSearchProducts}
+              placeholder="Fragrances"
+              keyboardType="decimal-pad"
+            />
+            <TouchableOpacity>
+              <Image source={filterIcon} style={styles.filterIcon} />
+            </TouchableOpacity>
+          </View>
+
+          <ProductsCarrousel products={products} />
+
+          <View style={styles.categories}>
+            <Text>Some categories</Text>
+            <TouchableOpacity onPress={navigateToCategoriesScreen}>
+              <Text style={styles.seeMoreButton}>See More</Text>
+            </TouchableOpacity>
+          </View>
+
+          <CategoriesList
+            scrollEnabled={false}
+            categories={categories}
+            selectCategory={handleSelectedCategory}
           />
-          <TouchableOpacity>
-            <Image source={filterIcon} style={styles.filterIcon} />
-          </TouchableOpacity>
-        </View>
-
-        <ProductsCarrousel products={products} />
-
-        <View style={styles.categories}>
-          <Text>Some categories</Text>
-          <TouchableOpacity onPress={navigateToCategoriesScreen}>
-            <Text style={styles.seeMoreButton}>See More</Text>
-          </TouchableOpacity>
-        </View>
-
-        <CategoriesList
-          categories={categories}
-          selectCategory={handleSelectedCategory}
-        />
-      </SafeAreaView>
+        </SafeAreaView>
+      </ScrollView>
     </View>
   );
 };
@@ -86,6 +90,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 24,
+    paddingBottom: 24,
   },
   content: {
     gap: 24,
