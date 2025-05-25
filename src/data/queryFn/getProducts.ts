@@ -3,16 +3,39 @@ import {productsResponseSchema, TProducts} from '@data/schema/products.schema';
 import {httpClient} from '@lib/httpClient/axios';
 
 export type TProductsSearchProp = string;
+
+export enum ESortBy {
+  price = 'price',
+  ratting = 'ratting',
+}
+export enum EOrderBy {
+  than = 'desc',
+  lest = 'asc',
+}
+export type TSortByProps = {
+  sortBy?: ESortBy;
+  orderBy?: EOrderBy;
+};
+
 const {api} = httpClient();
 
 export const getProductsFn = () => {
-  const getProducts = async (): Promise<TProducts | undefined> => {
+  const getProducts = async ({
+    sortBy,
+    orderBy,
+  }: TSortByProps): Promise<TProducts | undefined> => {
     try {
-      const response = await api.get('/products');
+      let response;
 
-      productsResponseSchema.parse(response.data);
+      if (sortBy && orderBy) {
+        response = await api.get(`/products?sortBy=${sortBy}&order=${orderBy}`);
+      } else {
+        response = await api.get('/products');
+      }
 
-      return response.data;
+      const parsed = productsResponseSchema.parse(response.data);
+
+      return parsed;
     } catch (error) {
       console.error(error);
       return undefined;

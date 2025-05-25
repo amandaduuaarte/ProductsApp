@@ -3,6 +3,7 @@ import {Home} from '@presentation/screens/Home';
 import {ProductDetails} from '@presentation/screens/ProductDetails';
 import {Categories} from '@presentation/screens/Categories';
 import {ProductsList} from '@presentation/screens/ProductsList';
+import {BottomSheet} from '@presentation/shared/components/bottomSheet';
 import type {TStackRoutesProps} from './types';
 
 const Stack = createStackNavigator<TStackRoutesProps>();
@@ -39,6 +40,18 @@ export const StackRoutes = () => (
         title: 'Products List',
         headerBackTitle: '',
         headerShown: true,
+      }}
+    />
+    {/**
+     * BottomSheet
+     */}
+    <Stack.Screen
+      name="BottomSheet"
+      component={BottomSheet}
+      options={{
+        presentation: 'transparentModal',
+        headerShown: false,
+        animation: 'fade',
       }}
     />
   </Stack.Navigator>

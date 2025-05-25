@@ -21,6 +21,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import {CategoriesList} from '@presentation/shared/components/categoriesList';
 import {RetryView} from '@presentation/shared/components/retryView';
+
 import {ProductsCarrousel} from './components/productsCarrousel';
 import {LoadingView} from './components/loadingView';
 
@@ -37,7 +38,7 @@ export const Home = () => {
     refetch,
     isError: isProductsError,
     isLoading: isProductsLoading,
-  } = useGetProductsUseCase();
+  } = useGetProductsUseCase({});
 
   const {navigate} = useNavigation<THomeNavigationProp>();
 
@@ -55,6 +56,10 @@ export const Home = () => {
     navigate('ProductsList', {category});
   }, []);
 
+  const handleFiltersBottomSheet = () => {
+    navigate('BottomSheet');
+  };
+
   if (isProductsLoading) return <LoadingView />;
 
   if (isError) return <RetryView actionButton={refetch} />;
@@ -71,7 +76,7 @@ export const Home = () => {
               placeholder="Fragrances"
               keyboardType="decimal-pad"
             />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleFiltersBottomSheet}>
               <Image source={filterIcon} style={styles.filterIcon} />
             </TouchableOpacity>
           </View>
