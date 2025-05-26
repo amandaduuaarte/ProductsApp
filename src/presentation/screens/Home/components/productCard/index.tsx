@@ -1,7 +1,10 @@
 import {formatter} from '@domain/utils/formatterMoney';
+import {FavoriteTag} from '@presentation/shared/components/favoriteTag';
+
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 type TProductCard = {
+  id: number;
   name: string;
   price: number;
   category: string;
@@ -10,7 +13,7 @@ type TProductCard = {
 };
 
 export const ProductCard = (product: TProductCard) => {
-  const {name, price, category, thumbnail, onPress} = product;
+  const {name, price, category, thumbnail, onPress, id} = product;
   const {formatterMoney} = formatter;
 
   const priceFormatted = formatterMoney(price);
@@ -23,6 +26,7 @@ export const ProductCard = (product: TProductCard) => {
           {name}
         </Text>
 
+        <FavoriteTag productId={id} />
         <Text style={styles.text}>Price: {priceFormatted}</Text>
         <Text style={styles.text}>Category: {category}</Text>
       </TouchableOpacity>

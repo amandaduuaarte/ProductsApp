@@ -7,23 +7,17 @@ export const favoritesProductFn = () => {
     return data ? JSON.parse(data) : [];
   };
 
-  const saveProductsId = (productsId: number[]) => {
-    storage.set(STORAGE_KEY, JSON.stringify(productsId));
-  };
-
-  const saveProducts = (id: number) => {
+  const saveProductsId = (id: number) => {
     const current = getProductsId();
-    if (!current.includes(id)) {
-      const updated = [...current, id];
-      saveProductsId(updated);
-    }
+    const updated = Array.from(new Set([...current, id]));
+    storage.set(STORAGE_KEY, JSON.stringify(updated));
   };
 
-  const removeProduct = (productId: number) => {
+  const removeProduct = (id: number) => {
     const current = getProductsId();
-    const updated = current.filter(id => productId !== id);
-    saveProductsId(updated);
+    const updated = current.filter(item => item !== id);
+    storage.set(STORAGE_KEY, JSON.stringify(updated));
   };
 
-  return {saveProducts, removeProduct, getProductsId};
+  return {saveProductsId, removeProduct, getProductsId};
 };

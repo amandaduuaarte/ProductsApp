@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {FavoriteTag} from '@presentation/shared/components/favoriteTag';
 import {LoadingView} from './components/loadingView';
 
 type ProductListNavigationProp = StackNavigationProp<
@@ -49,7 +50,6 @@ export const ProductsList = ({route, navigation}: ProductListScreenProps) => {
   }, []);
 
   const isLoading = isLoadingProducts || isRefetching;
-
   const renderProductCard = ({item}: ListRenderItemInfo<TProduct>) => {
     return (
       <TouchableOpacity
@@ -63,7 +63,7 @@ export const ProductsList = ({route, navigation}: ProductListScreenProps) => {
           </Text>
 
           <Text style={styles.price}>{formatterMoney(item.price)}</Text>
-
+          <FavoriteTag productId={item.id} />
           <Text
             numberOfLines={2}
             style={styles.description}
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     color: '#001d3d',
     fontSize: 16,
     fontWeight: 700,
-    marginTop: 8,
+    marginVertical: 8,
   },
   productList: {
     backgroundColor: '#ffffff',

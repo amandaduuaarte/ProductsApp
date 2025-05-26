@@ -22,6 +22,7 @@ export const ProductsCarrousel = ({
   const renderProductCard = useCallback(
     ({item}: ListRenderItemInfo<TProduct>) => (
       <ProductCard
+        id={item.id}
         name={item.title}
         price={item.price}
         category={item.category}
