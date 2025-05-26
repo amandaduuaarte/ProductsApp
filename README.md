@@ -9,9 +9,9 @@ This project includes example videos, technology stack, and setup instructions.
 
 | Feature      | Demo                        |
 | ------------ | --------------------------- |
-| Home Screen  | 🎝️ Add your video/gif here |
-| Product List | 🎝️ Add your video/gif here |
-| Categories    | 🎝️ Add your video/gif here |
+| Home Screen  | https://github.com/user-attachments/assets/249614ac-0407-433b-ab30-3ed3587910d8 |
+| Product details | https://github.com/user-attachments/assets/4b27ac68-2ca7-46e8-ab86-d1384f75bc13 |
+| Categories    | https://github.com/user-attachments/assets/8f378a8f-d564-4016-85c6-b98e83f2f9f8 |
 
 
 ---
@@ -26,9 +26,15 @@ This project includes example videos, technology stack, and setup instructions.
 * **axios** – Http client
 * **react-query** – request handler
 
+
+
 ---
 
 ## 🚀 Getting Started
+
+
+
+
 
 ### 1. Clone the repository
 
