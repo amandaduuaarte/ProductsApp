@@ -56,18 +56,6 @@ export const BottomSheet = () => {
     });
   };
 
-  const handleClearFilter = () => {
-    reset({
-      index: 1,
-      routes: [
-        {
-          name: 'Home',
-          params: {},
-        },
-      ],
-    });
-  };
-
   const isActive = (sortBy: ESortBy, orderBy: EOrderBy) =>
     filtersApplied.sortBy === sortBy && filtersApplied.orderBy === orderBy;
 
@@ -98,10 +86,6 @@ export const BottomSheet = () => {
 
         <TouchableOpacity onPress={handleAppliedFilter} style={styles.button}>
           <Text style={styles.buttonText}>Apply filters</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={handleClearFilter} style={styles.button}>
-          <Text style={styles.buttonText}>Clear filters</Text>
         </TouchableOpacity>
       </View>
     </Pressable>

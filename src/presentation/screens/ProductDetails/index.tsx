@@ -60,7 +60,7 @@ export const ProductDetails = ({route}: Props) => {
 
       <View style={styles.tag}>
         <Text style={styles.label}>Rating:</Text>
-        <Text style={styles.value}>{productDetails?.rating} ★</Text>
+        <Text style={styles.value}>{productDetails?.rating} ⭐</Text>
       </View>
     </View>
   );

@@ -13,7 +13,7 @@ import {useGetProductsUseCase} from '@domain/useCases/useGetProductsUseCase';
 import {useGetProductsCategoriesUseCase} from '@domain/useCases/useGetProductsCategoriesUseCase';
 
 import {useSearchProductsUseCase} from '@domain/useCases/useSearchProductsUseCase';
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 
 import {TStackRoutesProps} from '@presentation/routes/types';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -22,8 +22,10 @@ import {RouteProp} from '@react-navigation/native';
 import {CategoriesList} from '@presentation/shared/components/categoriesList';
 import {RetryView} from '@presentation/shared/components/retryView';
 
+import {sortByFormatter} from '@domain/utils/getSortBy';
 import {ProductsCarrousel} from './components/productsCarrousel';
 import {LoadingView} from './components/loadingView';
+import {Filters} from './components/filters';
 
 type HomeNavigationProp = StackNavigationProp<TStackRoutesProps, 'Home'>;
 type HomeRouteProp = RouteProp<TStackRoutesProps, 'Home'>;
@@ -36,6 +38,12 @@ type HomeScreenProps = {
 const filterIcon = require('@assets/icons/filter.png');
 
 export const Home = ({route, navigation}: HomeScreenProps) => {
+  const hasFilters = !!route.params?.sortBy && !!route.params?.orderBy;
+
+  const [filtersApplied, setFiltersApplied] = useState<boolean | undefined>(
+    hasFilters,
+  );
+
   const {searchProducts, isError: isSearchProductsError} =
     useSearchProductsUseCase();
   const {categories} = useGetProductsCategoriesUseCase({limit: 4});
@@ -45,13 +53,14 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
     isError: isProductsError,
     isLoading: isProductsLoading,
   } = useGetProductsUseCase({
-    sortBy: route.params?.sortBy,
-    orderBy: route.params?.orderBy,
+    sortBy: filtersApplied ? route.params?.sortBy : undefined,
+    orderBy: filtersApplied ? route.params?.orderBy : undefined,
   });
 
   const {navigate} = navigation;
 
   const isError = isSearchProductsError || isProductsError;
+  const {getSortBy} = sortByFormatter;
 
   const handleSearchProducts = useCallback((value: string) => {
     searchProducts({search: value});
@@ -70,6 +79,11 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
       navigate('BottomSheet');
     }, 200);
   };
+
+  const filterLabel = getSortBy({
+    sortBy: route.params?.sortBy,
+    orderBy: route.params?.orderBy,
+  });
 
   if (isProductsLoading) return <LoadingView />;
 
@@ -91,6 +105,9 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
               <Image source={filterIcon} style={styles.filterIcon} />
             </TouchableOpacity>
           </View>
+          {filtersApplied && (
+            <Filters label={filterLabel} action={setFiltersApplied} />
+          )}
 
           <ProductsCarrousel products={products} />
 
