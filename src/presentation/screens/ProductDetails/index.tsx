@@ -5,6 +5,7 @@ import {RetryView} from '@presentation/shared/components/retryView';
 import {RouteProp} from '@react-navigation/native';
 
 import {Image, StyleSheet, Text, View} from 'react-native';
+import {FavoriteTag} from '@presentation/shared/components/favoriteTag';
 import {LoadingView} from './components/loadingView';
 
 type ProductDetailsScreenRouteProp = RouteProp<
@@ -42,6 +43,8 @@ export const ProductDetails = ({route}: Props) => {
       </Text>
 
       <Text style={styles.value}>{productDetails?.description}</Text>
+
+      <FavoriteTag productId={productDetails?.discountPercentage ?? 0} />
 
       <View style={styles.priceContainer}>
         <Text style={styles.price}>
