@@ -1,6 +1,7 @@
 import {useGetProductsCategoriesUseCase} from '@domain/useCases/useGetProductsCategoriesUseCase';
 import {TStackRoutesProps} from '@presentation/routes/types';
 import {CategoriesList} from '@presentation/shared/components/categoriesList';
+import {RetryView} from '@presentation/shared/components/retryView';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useCallback} from 'react';
@@ -12,13 +13,15 @@ type TCategoriesNavigationProp = StackNavigationProp<
   'Categories'
 >;
 export const Categories = () => {
-  const {categories} = useGetProductsCategoriesUseCase({});
+  const {categories, isError, refetch} = useGetProductsCategoriesUseCase({});
 
   const {navigate} = useNavigation<TCategoriesNavigationProp>();
 
   const handleSelectedCategory = useCallback((category: string) => {
     navigate('ProductsList', {category});
   }, []);
+
+  if (isError) return <RetryView actionButton={refetch} />;
 
   return (
     <View style={styles.container}>
