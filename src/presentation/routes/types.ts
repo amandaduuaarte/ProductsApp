@@ -1,10 +1,12 @@
+import {TSortByProps} from '@data/queryFn/getProducts';
+
 enum ESortBy {
   Price = 'Price',
   Rating = 'Rating',
 }
 
 export type TStackRoutesProps = {
-  Home: undefined;
+  Home?: TSortByProps;
   ProductDetails: {
     productId: number;
   };

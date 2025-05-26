@@ -17,7 +17,7 @@ import {useCallback} from 'react';
 
 import {TStackRoutesProps} from '@presentation/routes/types';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp} from '@react-navigation/native';
 
 import {CategoriesList} from '@presentation/shared/components/categoriesList';
 import {RetryView} from '@presentation/shared/components/retryView';
@@ -25,11 +25,17 @@ import {RetryView} from '@presentation/shared/components/retryView';
 import {ProductsCarrousel} from './components/productsCarrousel';
 import {LoadingView} from './components/loadingView';
 
-type THomeNavigationProp = StackNavigationProp<TStackRoutesProps, 'Home'>;
+type HomeNavigationProp = StackNavigationProp<TStackRoutesProps, 'Home'>;
+type HomeRouteProp = RouteProp<TStackRoutesProps, 'Home'>;
+
+type HomeScreenProps = {
+  navigation: HomeNavigationProp;
+  route: HomeRouteProp;
+};
 
 const filterIcon = require('@assets/icons/filter.png');
 
-export const Home = () => {
+export const Home = ({route, navigation}: HomeScreenProps) => {
   const {searchProducts, isError: isSearchProductsError} =
     useSearchProductsUseCase();
   const {categories} = useGetProductsCategoriesUseCase({limit: 4});
@@ -38,9 +44,12 @@ export const Home = () => {
     refetch,
     isError: isProductsError,
     isLoading: isProductsLoading,
-  } = useGetProductsUseCase({});
+  } = useGetProductsUseCase({
+    sortBy: route.params?.sortBy,
+    orderBy: route.params?.orderBy,
+  });
 
-  const {navigate} = useNavigation<THomeNavigationProp>();
+  const {navigate} = navigation;
 
   const isError = isSearchProductsError || isProductsError;
 
@@ -57,7 +66,9 @@ export const Home = () => {
   }, []);
 
   const handleFiltersBottomSheet = () => {
-    navigate('BottomSheet');
+    setTimeout(() => {
+      navigate('BottomSheet');
+    }, 200);
   };
 
   if (isProductsLoading) return <LoadingView />;

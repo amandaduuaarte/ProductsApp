@@ -4,7 +4,7 @@ import {formatter} from '@domain/utils/formatterMoney';
 import {TStackRoutesProps} from '@presentation/routes/types';
 import {EmptyView} from '@presentation/shared/components/emptyView';
 import {RetryView} from '@presentation/shared/components/retryView';
-import {RouteProp, useNavigation} from '@react-navigation/native';
+import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useCallback} from 'react';
 import {
@@ -18,23 +18,20 @@ import {
 } from 'react-native';
 import {LoadingView} from './components/loadingView';
 
-type ProductDetailsScreenRouteProp = RouteProp<
+type ProductListNavigationProp = StackNavigationProp<
   TStackRoutesProps,
   'ProductsList'
 >;
+type ProductListRouteProp = RouteProp<TStackRoutesProps, 'ProductsList'>;
 
-type Props = {
-  route: ProductDetailsScreenRouteProp;
+type ProductListScreenProps = {
+  navigation: ProductListNavigationProp;
+  route: ProductListRouteProp;
 };
 
-type THomeNavigationProp = StackNavigationProp<
-  TStackRoutesProps,
-  'ProductsList'
->;
-
-export const ProductsList = ({route}: Props) => {
+export const ProductsList = ({route, navigation}: ProductListScreenProps) => {
   const {category} = route.params;
-  const {navigate} = useNavigation<THomeNavigationProp>();
+  const {navigate} = navigation;
 
   const {
     productsByCategory,
