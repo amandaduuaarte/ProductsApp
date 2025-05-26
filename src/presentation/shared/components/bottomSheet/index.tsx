@@ -27,8 +27,8 @@ const filterOptions = [
   {
     label: 'Rating',
     options: [
-      {label: 'Good rating', sortBy: ESortBy.ratting, orderBy: EOrderBy.than},
-      {label: 'Bad rating', sortBy: ESortBy.ratting, orderBy: EOrderBy.lest},
+      {label: 'Good rating', sortBy: ESortBy.rating, orderBy: EOrderBy.than},
+      {label: 'Bad rating', sortBy: ESortBy.rating, orderBy: EOrderBy.lest},
     ],
   },
 ];

@@ -6,7 +6,7 @@ export type TProductsSearchProp = string;
 
 export enum ESortBy {
   price = 'price',
-  ratting = 'ratting',
+  rating = 'rating',
 }
 export enum EOrderBy {
   than = 'desc',
