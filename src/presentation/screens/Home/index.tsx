@@ -44,22 +44,23 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
     hasFilters,
   );
 
-  const {searchProducts, isError: isSearchProductsError} =
-    useSearchProductsUseCase();
+  const sortBy = {
+    sortBy: filtersApplied ? route.params?.sortBy : undefined,
+    orderBy: filtersApplied ? route.params?.orderBy : undefined,
+  };
   const {categories} = useGetProductsCategoriesUseCase({limit: 4});
   const {
     products,
     refetch,
     isError: isProductsError,
     isLoading: isProductsLoading,
-  } = useGetProductsUseCase({
-    sortBy: filtersApplied ? route.params?.sortBy : undefined,
-    orderBy: filtersApplied ? route.params?.orderBy : undefined,
-  });
+  } = useGetProductsUseCase(sortBy);
+
+  const {searchProducts} = useSearchProductsUseCase(sortBy);
 
   const {navigate} = navigation;
 
-  const isError = isSearchProductsError || isProductsError;
+  const isError = isProductsError;
   const {getSortBy} = sortByFormatter;
 
   const handleSearchProducts = useCallback((value: string) => {
@@ -105,6 +106,7 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
               <Image source={filterIcon} style={styles.filterIcon} />
             </TouchableOpacity>
           </View>
+
           {filtersApplied && (
             <Filters label={filterLabel} action={setFiltersApplied} />
           )}

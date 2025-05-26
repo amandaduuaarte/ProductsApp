@@ -17,14 +17,13 @@ export const getProductsService = ({orderBy, sortBy}: TSortByProps) =>
     queryKey: [PRODUCTS_QUERY_KEY, orderBy, sortBy],
   });
 
-export const searchProductsService = () => {
+export const searchProductsService = ({orderBy, sortBy}: TSortByProps) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({search}: {search: TProductsSearchProp}) =>
       searchProducts({search}),
-    mutationKey: [PRODUCTS_SEARCHED_QUERY_KEY],
     onSuccess: products => {
-      queryClient.setQueryData([PRODUCTS_QUERY_KEY], products);
+      queryClient.setQueryData([PRODUCTS_QUERY_KEY, orderBy, sortBy], products);
     },
   });
 };
