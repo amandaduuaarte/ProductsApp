@@ -9,9 +9,9 @@ This project includes example videos, technology stack, and setup instructions.
 
 | Feature      | Demo                        |
 | ------------ | --------------------------- |
-| Home Screen  | https://github.com/user-attachments/assets/249614ac-0407-433b-ab30-3ed3587910d8 |
-| Product details | https://github.com/user-attachments/assets/4b27ac68-2ca7-46e8-ab86-d1384f75bc13 |
-| Categories    | https://github.com/user-attachments/assets/8f378a8f-d564-4016-85c6-b98e83f2f9f8 |
+| Home Screen  | <video src="https://github.com/user-attachments/assets/249614ac-0407-433b-ab30-3ed3587910d8"/> |
+| Product details | <video src="https://github.com/user-attachments/assets/4b27ac68-2ca7-46e8-ab86-d1384f75bc13"/> |
+| Categories    | <video src="https://github.com/user-attachments/assets/8f378a8f-d564-4016-85c6-b98e83f2f9f8"/> |
 
 
 ---
