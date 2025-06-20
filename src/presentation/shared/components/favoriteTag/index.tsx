@@ -1,7 +1,13 @@
 import {useFavoritesProductsUseCase} from '@domain/useCases/useFavoritesProductsUseCase';
 import {useCallback} from 'react';
 
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 const favoriteIcon = require('@assets/icons/favorite.png');
 const favoriteOutlineIcon = require('@assets/icons/favoriteOutline.png');
@@ -18,21 +24,26 @@ export const FavoriteTag = ({productId}: {productId: number}) => {
     saveProductsId(productId);
   }, []);
 
+  const renderFavButton = ({
+    icon,
+    onPress,
+  }: {
+    icon: ImageSourcePropType;
+    onPress(): void;
+  }) => (
+    <TouchableOpacity style={styles.favContainer} onPress={onPress}>
+      <Image source={icon} />
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
-      {isProductFav(productId) ? (
-        <TouchableOpacity
-          style={styles.favContainer}
-          onPress={handleRemovingProductID}>
-          <Image source={favoriteIcon} />
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity
-          style={styles.favContainer}
-          onPress={handleSavingProductID}>
-          <Image source={favoriteOutlineIcon} />
-        </TouchableOpacity>
-      )}
+      {isProductFav(productId)
+        ? renderFavButton({icon: favoriteIcon, onPress: handleSavingProductID})
+        : renderFavButton({
+            icon: favoriteOutlineIcon,
+            onPress: handleRemovingProductID,
+          })}
     </View>
   );
 };

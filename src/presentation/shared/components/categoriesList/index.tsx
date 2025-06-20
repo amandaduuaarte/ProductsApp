@@ -62,9 +62,9 @@ const styles = StyleSheet.create({
     borderColor: '#415a77',
     borderRadius: 12,
     borderWidth: 2,
-    height: 164,
     justifyContent: 'center',
     padding: 12,
+    textAlign: 'center',
     width: '45%',
   },
   categoryName: {

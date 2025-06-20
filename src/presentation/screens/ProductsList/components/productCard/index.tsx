@@ -30,7 +30,7 @@ export const ProductCard = ({
             {title}
           </Text>
 
-          <Text style={styles.price}>{formatterMoney(price)}</Text>
+          <Text style={styles.price}>Price: {formatterMoney(price)}</Text>
 
           <Text numberOfLines={2} style={styles.stock} ellipsizeMode="tail">
             In storage: {quantity}
@@ -45,7 +45,6 @@ export const ProductCard = ({
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'flex-start',
     backgroundColor: '#F4F8FB',
     borderRadius: 12,
     flexDirection: 'row',
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   stock: {
-    alignSelf: 'flex-end',
+    fontSize: 16,
     marginTop: 12,
   },
   thumbnail: {
