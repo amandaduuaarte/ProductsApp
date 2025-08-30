@@ -1,7 +1,7 @@
-import {getProductsCategoriesService} from '@data/services/getProductsCategoriesService';
+import {useGetProductsCategoriesService} from '@data/services/getProductsCategoriesService';
 
 export const useGetProductsCategoriesUseCase = ({limit}: {limit?: number}) => {
   const {data, isLoading, isError, isRefetching, refetch} =
-    getProductsCategoriesService({limit});
+    useGetProductsCategoriesService({limit});
   return {categories: data, isLoading, isError, isRefetching, refetch};
 };

@@ -5,7 +5,7 @@ export const PRODUCTS_CATEGORIES_QUERY_KEY = 'PRODUCTS_CATEGORIES_KEY';
 
 const {get} = getProductsCategoriesFn();
 
-export const getProductsCategoriesService = ({limit}: {limit?: number}) =>
+export const useGetProductsCategoriesService = ({limit}: {limit?: number}) =>
   useQuery({
     queryFn: () => get(limit),
     queryKey: [PRODUCTS_CATEGORIES_QUERY_KEY, limit],
