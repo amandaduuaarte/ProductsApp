@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 35,
     justifyContent: 'center',
+    marginBottom: 24,
     width: '80%',
   },
   seeMoreText: {
