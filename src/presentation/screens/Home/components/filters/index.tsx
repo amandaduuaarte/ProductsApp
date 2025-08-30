@@ -10,7 +10,7 @@ type TFiltersProps = {
 export const Filters = ({label, action}: TFiltersProps) => {
   const handleFilter = useCallback(() => {
     action(false);
-  }, []);
+  }, [action]);
 
   return (
     <View style={styles.filterContainer}>

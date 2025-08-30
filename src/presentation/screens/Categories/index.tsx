@@ -17,9 +17,12 @@ export const Categories = () => {
 
   const {navigate} = useNavigation<TCategoriesNavigationProp>();
 
-  const handleSelectedCategory = useCallback((category: string) => {
-    navigate('ProductsList', {category});
-  }, []);
+  const handleSelectedCategory = useCallback(
+    (category: string) => {
+      navigate('ProductsList', {category});
+    },
+    [navigate],
+  );
 
   if (isError) return <RetryView actionButton={refetch} />;
 

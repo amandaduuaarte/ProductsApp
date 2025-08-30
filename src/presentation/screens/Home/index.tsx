@@ -63,17 +63,23 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
   const isError = isProductsError;
   const {getSortBy} = sortByFormatter;
 
-  const handleSearchProducts = useCallback((value: string) => {
-    searchProducts({search: value});
-  }, []);
+  const handleSearchProducts = useCallback(
+    (value: string) => {
+      searchProducts({search: value});
+    },
+    [searchProducts],
+  );
 
   const navigateToCategoriesScreen = useCallback(() => {
     navigate('Categories');
-  }, []);
+  }, [navigate]);
 
-  const handleSelectedCategory = useCallback((category: string) => {
-    navigate('ProductsList', {category});
-  }, []);
+  const handleSelectedCategory = useCallback(
+    (category: string) => {
+      navigate('ProductsList', {category});
+    },
+    [navigate],
+  );
 
   const handleFiltersBottomSheet = () => {
     setTimeout(() => {

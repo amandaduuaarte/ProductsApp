@@ -45,9 +45,12 @@ export const ProductsList = ({route, navigation}: ProductListScreenProps) => {
   });
   const {formatterMoney} = formatter;
 
-  const handleNavigationToDetailsScreen = useCallback(({id}: {id: number}) => {
-    navigate('ProductDetails', {productId: id});
-  }, []);
+  const handleNavigationToDetailsScreen = useCallback(
+    ({id}: {id: number}) => {
+      navigate('ProductDetails', {productId: id});
+    },
+    [navigate],
+  );
 
   const isLoading = isLoadingProducts || isRefetching;
   const renderProductCard = ({item}: ListRenderItemInfo<TProduct>) => {
