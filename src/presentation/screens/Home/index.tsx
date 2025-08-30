@@ -125,7 +125,7 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
 
           <CategoriesList
             scrollEnabled={false}
-            categories={categories}
+            categories={categories?.slice(0, 4)}
             selectCategory={handleSelectedCategory}
           />
 

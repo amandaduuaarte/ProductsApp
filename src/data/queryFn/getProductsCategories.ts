@@ -6,15 +6,13 @@ import {httpClient} from '@lib/httpClient/axios';
 
 const {api} = httpClient();
 export const useGetProductsCategoriesFn = () => {
-  const get = async (
-    limit?: number,
-  ): Promise<TProductsCategories | undefined> => {
+  const get = async (): Promise<TProductsCategories | undefined> => {
     try {
       const response = await api.get(`/products/categories`);
 
       productsCategoriesSchema.parse(response.data);
 
-      return response.data.slice(0, limit);
+      return response.data;
     } catch (error) {
       console.error(error);
       return undefined;

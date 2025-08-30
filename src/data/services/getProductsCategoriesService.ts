@@ -11,7 +11,7 @@ export const useGetProductsCategoriesService = ({
   const {get} = useGetProductsCategoriesFn();
 
   return useQuery({
-    queryFn: () => get(limit),
+    queryFn: () => get(),
     queryKey: [PRODUCTS_CATEGORIES_QUERY_KEY, limit],
   });
 };
