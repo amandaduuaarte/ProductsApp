@@ -5,6 +5,7 @@ import {
 import {useCallback} from 'react';
 import {
   FlatList,
+  ImageBackground,
   ListRenderItemInfo,
   StyleSheet,
   Text,
@@ -31,11 +32,15 @@ export const CategoriesList = ({
 
   const renderCategoryCard = useCallback(
     ({item}: ListRenderItemInfo<TProductCategory>) => (
-      <TouchableOpacity
-        style={styles.categoryContainer}
-        onPress={() => handleSelectedCategory(item.name)}>
-        <Text style={styles.categoryName}>{item.name}</Text>
-      </TouchableOpacity>
+      <ImageBackground
+        source={{uri: `src/assets/images/${item.name}.jpg`}}
+        style={styles.imageBackground}>
+        <TouchableOpacity
+          style={styles.categoryContainer}
+          onPress={() => handleSelectedCategory(item.name)}>
+          <Text style={styles.categoryName}>{item.name}</Text>
+        </TouchableOpacity>
+      </ImageBackground>
     ),
     [handleSelectedCategory],
   );
@@ -67,12 +72,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     height: 164,
     justifyContent: 'center',
-    padding: 12,
-    width: '45%',
   },
   categoryName: {
     color: '#2b2d42',
     fontSize: 20,
     fontWeight: 400,
+  },
+  imageBackground: {
+    height: 164,
+    width: '45%',
   },
 });

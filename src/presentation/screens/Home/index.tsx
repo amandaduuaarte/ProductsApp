@@ -48,7 +48,7 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
     sortBy: filtersApplied ? route.params?.sortBy : undefined,
     orderBy: filtersApplied ? route.params?.orderBy : undefined,
   };
-  const {categories} = useGetProductsCategoriesUseCase({limit: 4});
+  const {categories} = useGetProductsCategoriesUseCase(4);
   const {
     products,
     refetch,
@@ -120,10 +120,7 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
           <ProductsCarrousel products={products} />
 
           <View style={styles.categories}>
-            <Text style={styles.categoriesText}>Categories</Text>
-            <TouchableOpacity onPress={navigateToCategoriesScreen}>
-              <Text style={styles.seeMoreButton}>See More</Text>
-            </TouchableOpacity>
+            <Text style={styles.categoriesText}>Shop by categories</Text>
           </View>
 
           <CategoriesList
@@ -131,6 +128,12 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
             categories={categories}
             selectCategory={handleSelectedCategory}
           />
+
+          <TouchableOpacity
+            onPress={navigateToCategoriesScreen}
+            style={styles.seeMoreButton}>
+            <Text style={styles.seeMoreText}>Browse all categories</Text>
+          </TouchableOpacity>
         </SafeAreaView>
       </ScrollView>
     </View>
@@ -167,6 +170,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   seeMoreButton: {
+    alignSelf: 'center',
+    borderColor: '#000000',
+    borderWidth: 1,
+    height: 35,
+    justifyContent: 'center',
+    width: '80%',
+  },
+  seeMoreText: {
+    alignSelf: 'center',
     color: '#415a77',
   },
   textField: {
