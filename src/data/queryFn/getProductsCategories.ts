@@ -5,7 +5,7 @@ import {
 import {httpClient} from '@lib/httpClient/axios';
 
 const {api} = httpClient();
-export const getProductsCategoriesFn = () => {
+export const useGetProductsCategoriesFn = () => {
   const get = async (
     limit?: number,
   ): Promise<TProductsCategories | undefined> => {

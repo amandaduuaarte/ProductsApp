@@ -18,6 +18,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-native/all',
     'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
     'airbnb',
     'airbnb-typescript',
     'prettier'
@@ -39,7 +40,8 @@ module.exports = {
     'arrow-body-style': 'off',
     '@typescript-eslint/no-require-imports': 'off',
     'react/require-default-props': 'off',
-    'react/no-array-index-key': 'off'
+    'react/no-array-index-key': 'off',
+    'react-hooks/exhaustive-deps': 'warn',
   },
   settings: {
     react: {

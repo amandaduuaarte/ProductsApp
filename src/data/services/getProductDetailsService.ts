@@ -1,13 +1,14 @@
-import {getProductsDetailsFn} from '@data/queryFn/getProductDetails';
+import {useGetProductsDetailsFn} from '@data/queryFn/getProductDetails';
 
 import {useQuery} from '@tanstack/react-query';
 
 export const PRODUCTS_DETAILS_QUERY_KEY = 'PRODUCTS_DETAILS__QUERY_KEY';
 
-const {get} = getProductsDetailsFn();
+export const useGetProductsDetailsService = ({id}: {id: number}) => {
+  const {get} = useGetProductsDetailsFn();
 
-export const getProductsDetailsService = ({id}: {id: number}) =>
-  useQuery({
+  return useQuery({
     queryFn: () => get(id),
     queryKey: [PRODUCTS_DETAILS_QUERY_KEY, id],
   });
+};

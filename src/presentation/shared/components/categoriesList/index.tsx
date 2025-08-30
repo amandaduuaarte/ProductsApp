@@ -22,9 +22,12 @@ export const CategoriesList = ({
   categories,
   selectCategory,
 }: TProductCategoriesProps) => {
-  const handleSelectedCategory = useCallback((category: string) => {
-    selectCategory(category);
-  }, []);
+  const handleSelectedCategory = useCallback(
+    (category: string) => {
+      selectCategory(category);
+    },
+    [selectCategory],
+  );
 
   const renderCategoryCard = useCallback(
     ({item}: ListRenderItemInfo<TProductCategory>) => (
@@ -34,7 +37,7 @@ export const CategoriesList = ({
         <Text style={styles.categoryName}>{item.name}</Text>
       </TouchableOpacity>
     ),
-    [],
+    [handleSelectedCategory],
   );
 
   return (

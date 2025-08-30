@@ -1,4 +1,4 @@
-import {getProductsByCategoryService} from '@data/services/getProductsService';
+import {useGetProductsByCategoryService} from '@data/services/getProductsService';
 
 export const useGetProductsByCategoryUseCase = ({
   category,
@@ -6,7 +6,7 @@ export const useGetProductsByCategoryUseCase = ({
   category: string;
 }) => {
   const {data, isLoading, isError, isRefetching, refetch} =
-    getProductsByCategoryService({category});
+    useGetProductsByCategoryService({category});
 
   return {productsByCategory: data, isLoading, isError, isRefetching, refetch};
 };

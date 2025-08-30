@@ -2,7 +2,7 @@ import {storage} from '@lib/storage/mmkv';
 import {useState} from 'react';
 
 const STORAGE_KEY = 'favorites-products';
-export const favoritesProductFn = () => {
+export const useFavoritesProductFn = () => {
   const [favorites, setFavorites] = useState<boolean>();
 
   const getProductsId = (): number[] => {

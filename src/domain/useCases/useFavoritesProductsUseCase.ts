@@ -1,8 +1,8 @@
-import {favoritesProductFn} from '@data/queryFn/favoritesProduct';
+import {useFavoritesProductFn} from '@data/queryFn/favoritesProduct';
 
 export const useFavoritesProductsUseCase = () => {
   const {saveProductsId, removeProduct, getProductsId, favorites} =
-    favoritesProductFn();
+    useFavoritesProductFn();
 
   const isProductFav = (productId: number) => {
     const current = getProductsId();

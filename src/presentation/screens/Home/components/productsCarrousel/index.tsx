@@ -15,9 +15,12 @@ export const ProductsCarrousel = ({
 }) => {
   const {navigate} = useNavigation<THomeNavigationProp>();
 
-  const handleNavigationToDetailsScreen = useCallback(({id}: {id: number}) => {
-    navigate('ProductDetails', {productId: id});
-  }, []);
+  const handleNavigationToDetailsScreen = useCallback(
+    ({id}: {id: number}) => {
+      navigate('ProductDetails', {productId: id});
+    },
+    [navigate],
+  );
 
   const renderProductCard = useCallback(
     ({item}: ListRenderItemInfo<TProduct>) => (
@@ -30,7 +33,7 @@ export const ProductsCarrousel = ({
         onPress={() => handleNavigationToDetailsScreen({id: item.id})}
       />
     ),
-    [],
+    [handleNavigationToDetailsScreen],
   );
 
   return (

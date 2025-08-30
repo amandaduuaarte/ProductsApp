@@ -9,11 +9,11 @@ export const FavoriteTag = ({productId}: {productId: number}) => {
 
   const handleRemovingProductID = useCallback(() => {
     removeProduct(productId);
-  }, []);
+  }, [productId, removeProduct]);
 
   const handleSavingProductID = useCallback(() => {
     saveProductsId(productId);
-  }, []);
+  }, [productId, saveProductsId]);
 
   return (
     <View>
