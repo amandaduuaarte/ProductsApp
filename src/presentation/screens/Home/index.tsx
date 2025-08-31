@@ -14,7 +14,7 @@ import {useGetProductsUseCase} from '@domain/useCases/useGetProductsUseCase';
 import {useGetProductsCategoriesUseCase} from '@domain/useCases/useGetProductsCategoriesUseCase';
 
 import {useSearchProductsUseCase} from '@domain/useCases/useSearchProductsUseCase';
-import {useCallback, useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 
 import {TStackRoutesProps} from '@presentation/routes/types';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -41,6 +41,7 @@ const banner = require('@assets/images/shopImage.jpg');
 
 export const Home = ({route, navigation}: HomeScreenProps) => {
   const hasFilters = !!route.params?.sortBy && !!route.params?.orderBy;
+  const searchInputRef = useRef<TextInput>(null);
 
   const [filtersApplied, setFiltersApplied] = useState<boolean | undefined>(
     hasFilters,
@@ -89,6 +90,11 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
     }, 200);
   };
 
+  const navigateToSearchScreen = () => {
+    navigate('Search');
+    searchInputRef.current?.blur();
+  };
+
   const filterLabel = getSortBy({
     sortBy: route.params?.sortBy,
     orderBy: route.params?.orderBy,
@@ -105,10 +111,12 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
           <Text style={styles.title}>Products App</Text>
           <View style={styles.searchContainer}>
             <TextInput
+              ref={searchInputRef}
               style={styles.textField}
               onChangeText={handleSearchProducts}
               placeholder="Fragrances"
               keyboardType="decimal-pad"
+              onFocus={navigateToSearchScreen}
             />
             <TouchableOpacity onPress={handleFiltersBottomSheet}>
               <Image source={filterIcon} style={styles.filterIcon} />
@@ -200,7 +208,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 35,
     justifyContent: 'center',
-    marginBottom: 24,
+    marginBottom: 82,
     width: '80%',
   },
   seeMoreText: {
@@ -208,9 +216,9 @@ const styles = StyleSheet.create({
     color: '#415a77',
   },
   textField: {
-    borderColor: '#219ebc',
-    borderRadius: 12,
-    borderWidth: 2,
+    borderBottomColor: '#000',
+    borderBottomWidth: 1,
+    height: 45,
     padding: 24,
     width: '85%',
   },
