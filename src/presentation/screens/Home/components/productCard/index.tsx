@@ -1,3 +1,4 @@
+import {FavoriteTag} from '@presentation/shared/components/favoriteTag';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 type TProductCard = {
@@ -13,12 +14,12 @@ export const ProductCard = (product: TProductCard) => {
   return (
     <View key={id}>
       <TouchableOpacity style={styles.container} onPress={onPress}>
+        <FavoriteTag productId={id} />
         <Image source={{uri: thumbnail}} style={styles.thumbnail} />
         <Text style={styles.title} numberOfLines={1}>
           {name}
         </Text>
 
-        {/* <FavoriteTag productId={id} /> */}
         <Text style={styles.text}>Shop now</Text>
         <View style={styles.textDecoration} />
       </TouchableOpacity>
