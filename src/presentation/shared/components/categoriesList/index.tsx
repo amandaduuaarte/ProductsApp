@@ -19,6 +19,7 @@ const categoryImages: {[key: string]: ReturnType<typeof require>} = {
   Fragrances: require('../../../../assets/images/Fragrances.jpg'),
   Furniture: require('../../../../assets/images/Furniture.jpg'),
   Groceries: require('../../../../assets/images/Groceries.jpg'),
+  Default: require('../../../../assets/images/category.jpg'),
 };
 
 type TProductCategoriesProps = {
@@ -42,7 +43,7 @@ export const CategoriesList = ({
     ({item}: ListRenderItemInfo<TProductCategory>) => (
       <TouchableOpacity onPress={() => handleSelectedCategory(item.name)}>
         <ImageBackground
-          source={categoryImages[item.name]}
+          source={categoryImages[item.name] || categoryImages.Default}
           style={styles.imageBackground}>
           <View style={styles.categoryNameContainer}>
             <Text style={styles.categoryName}>{item.name}</Text>
