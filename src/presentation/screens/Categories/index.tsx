@@ -13,7 +13,7 @@ type TCategoriesNavigationProp = StackNavigationProp<
   'Categories'
 >;
 export const Categories = () => {
-  const {categories, isError, refetch} = useGetProductsCategoriesUseCase({});
+  const {categories, isError, refetch} = useGetProductsCategoriesUseCase();
 
   const {navigate} = useNavigation<TCategoriesNavigationProp>();
 
