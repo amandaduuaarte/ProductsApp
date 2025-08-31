@@ -1,5 +1,6 @@
 import {
   Image,
+  ImageBackground,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -36,6 +37,7 @@ type HomeScreenProps = {
 };
 
 const filterIcon = require('@assets/icons/filter.png');
+const banner = require('@assets/images/shopImage.jpg');
 
 export const Home = ({route, navigation}: HomeScreenProps) => {
   const hasFilters = !!route.params?.sortBy && !!route.params?.orderBy;
@@ -113,6 +115,12 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
             </TouchableOpacity>
           </View>
 
+          <ImageBackground source={banner} style={styles.banner}>
+            <View style={styles.bannerTitleContainer}>
+              <Text style={styles.bannerTitle}>This season’s latest</Text>
+            </View>
+          </ImageBackground>
+
           {filtersApplied && (
             <Filters label={filterLabel} action={setFiltersApplied} />
           )}
@@ -141,6 +149,23 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
 };
 
 const styles = StyleSheet.create({
+  banner: {
+    alignSelf: 'center',
+    height: 205,
+    justifyContent: 'flex-end',
+    width: '100%',
+  },
+  bannerTitle: {
+    color: '#ffff',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  bannerTitleContainer: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#000',
+    padding: 12,
+    width: '45%',
+  },
   categories: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -190,7 +215,7 @@ const styles = StyleSheet.create({
     width: '85%',
   },
   title: {
-    color: '#219ebc',
+    color: '#000',
     fontSize: 18,
     fontWeight: '700',
   },
