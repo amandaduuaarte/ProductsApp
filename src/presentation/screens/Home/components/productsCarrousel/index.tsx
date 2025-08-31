@@ -8,11 +8,7 @@ import {ProductCard} from '../productCard';
 
 type THomeNavigationProp = StackNavigationProp<TStackRoutesProps, 'Home'>;
 
-export const ProductsCarrousel = ({
-  products,
-}: {
-  products: TProducts | undefined;
-}) => {
+export const ProductsCarrousel = ({products}: {products?: TProducts}) => {
   const {navigate} = useNavigation<THomeNavigationProp>();
 
   const handleNavigationToDetailsScreen = useCallback(
@@ -27,8 +23,6 @@ export const ProductsCarrousel = ({
       <ProductCard
         id={item.id}
         name={item.title}
-        price={item.price}
-        category={item.category}
         thumbnail={item.thumbnail}
         onPress={() => handleNavigationToDetailsScreen({id: item.id})}
       />

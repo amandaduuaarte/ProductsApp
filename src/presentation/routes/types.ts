@@ -13,4 +13,7 @@ export type TStackRoutesProps = {
   Categories: undefined;
   ProductsList: {category: string; sortBy?: ESortBy};
   BottomSheet: undefined;
+  Search: undefined;
+  Favorites: undefined;
+  TabRoutes: undefined;
 };

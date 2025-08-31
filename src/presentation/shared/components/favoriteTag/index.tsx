@@ -1,7 +1,10 @@
 import {useFavoritesProductsUseCase} from '@domain/useCases/useFavoritesProductsUseCase';
 import {useCallback} from 'react';
 
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+
+import FavIconOutline from '@assets/icons/favIconOutline.svg';
+import FavIcon from '@assets/icons/favIcon.svg';
 
 export const FavoriteTag = ({productId}: {productId: number}) => {
   const {saveProductsId, isProductFav, removeProduct} =
@@ -19,15 +22,15 @@ export const FavoriteTag = ({productId}: {productId: number}) => {
     <View>
       {isProductFav(productId) ? (
         <TouchableOpacity
-          style={styles.favContainer}
-          onPress={handleRemovingProductID}>
-          <Text>Favorite ❤️</Text>
+          onPress={handleRemovingProductID}
+          style={styles.container}>
+          <FavIcon />
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
-          style={styles.favContainer}
-          onPress={handleSavingProductID}>
-          <Text>Add Favorite</Text>
+          onPress={handleSavingProductID}
+          style={styles.container}>
+          <FavIconOutline />
         </TouchableOpacity>
       )}
     </View>
@@ -35,10 +38,7 @@ export const FavoriteTag = ({productId}: {productId: number}) => {
 };
 
 const styles = StyleSheet.create({
-  favContainer: {
-    backgroundColor: '#ffc8dd',
-    borderRadius: 16,
-    padding: 12,
-    width: '80%',
+  container: {
+    alignSelf: 'flex-end',
   },
 });

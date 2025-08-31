@@ -1,5 +1,6 @@
 import {
   Image,
+  ImageBackground,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -12,8 +13,7 @@ import {
 import {useGetProductsUseCase} from '@domain/useCases/useGetProductsUseCase';
 import {useGetProductsCategoriesUseCase} from '@domain/useCases/useGetProductsCategoriesUseCase';
 
-import {useSearchProductsUseCase} from '@domain/useCases/useSearchProductsUseCase';
-import {useCallback, useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 
 import {TStackRoutesProps} from '@presentation/routes/types';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -36,9 +36,11 @@ type HomeScreenProps = {
 };
 
 const filterIcon = require('@assets/icons/filter.png');
+const banner = require('@assets/images/shopImage.jpg');
 
 export const Home = ({route, navigation}: HomeScreenProps) => {
   const hasFilters = !!route.params?.sortBy && !!route.params?.orderBy;
+  const searchInputRef = useRef<TextInput>(null);
 
   const [filtersApplied, setFiltersApplied] = useState<boolean | undefined>(
     hasFilters,
@@ -48,7 +50,7 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
     sortBy: filtersApplied ? route.params?.sortBy : undefined,
     orderBy: filtersApplied ? route.params?.orderBy : undefined,
   };
-  const {categories} = useGetProductsCategoriesUseCase({limit: 4});
+  const {categories} = useGetProductsCategoriesUseCase(4);
   const {
     products,
     refetch,
@@ -56,19 +58,10 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
     isLoading: isProductsLoading,
   } = useGetProductsUseCase(sortBy);
 
-  const {searchProducts} = useSearchProductsUseCase(sortBy);
-
   const {navigate} = navigation;
 
   const isError = isProductsError;
   const {getSortBy} = sortByFormatter;
-
-  const handleSearchProducts = useCallback(
-    (value: string) => {
-      searchProducts({search: value});
-    },
-    [searchProducts],
-  );
 
   const navigateToCategoriesScreen = useCallback(() => {
     navigate('Categories');
@@ -87,6 +80,11 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
     }, 200);
   };
 
+  const navigateToSearchScreen = () => {
+    navigate('Search');
+    searchInputRef.current?.blur();
+  };
+
   const filterLabel = getSortBy({
     sortBy: route.params?.sortBy,
     orderBy: route.params?.orderBy,
@@ -103,15 +101,22 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
           <Text style={styles.title}>Products App</Text>
           <View style={styles.searchContainer}>
             <TextInput
+              ref={searchInputRef}
               style={styles.textField}
-              onChangeText={handleSearchProducts}
-              placeholder="Fragrances"
-              keyboardType="decimal-pad"
+              placeholder="Type here to search"
+              onFocus={navigateToSearchScreen}
             />
+
             <TouchableOpacity onPress={handleFiltersBottomSheet}>
               <Image source={filterIcon} style={styles.filterIcon} />
             </TouchableOpacity>
           </View>
+
+          <ImageBackground source={banner} style={styles.banner}>
+            <View style={styles.bannerTitleContainer}>
+              <Text style={styles.bannerTitle}>This season’s latest</Text>
+            </View>
+          </ImageBackground>
 
           {filtersApplied && (
             <Filters label={filterLabel} action={setFiltersApplied} />
@@ -120,17 +125,20 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
           <ProductsCarrousel products={products} />
 
           <View style={styles.categories}>
-            <Text style={styles.categoriesText}>Categories</Text>
-            <TouchableOpacity onPress={navigateToCategoriesScreen}>
-              <Text style={styles.seeMoreButton}>See More</Text>
-            </TouchableOpacity>
+            <Text style={styles.categoriesText}>Shop by categories</Text>
           </View>
 
           <CategoriesList
             scrollEnabled={false}
-            categories={categories}
+            categories={categories?.slice(0, 4)}
             selectCategory={handleSelectedCategory}
           />
+
+          <TouchableOpacity
+            onPress={navigateToCategoriesScreen}
+            style={styles.seeMoreButton}>
+            <Text style={styles.seeMoreText}>Browse all categories</Text>
+          </TouchableOpacity>
         </SafeAreaView>
       </ScrollView>
     </View>
@@ -138,6 +146,23 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
 };
 
 const styles = StyleSheet.create({
+  banner: {
+    alignSelf: 'center',
+    height: 205,
+    justifyContent: 'flex-end',
+    width: '100%',
+  },
+  bannerTitle: {
+    color: '#ffff',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  bannerTitleContainer: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#000',
+    padding: 12,
+    width: '45%',
+  },
   categories: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -167,17 +192,27 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   seeMoreButton: {
+    alignSelf: 'center',
+    borderColor: '#000000',
+    borderWidth: 1,
+    height: 35,
+    justifyContent: 'center',
+    marginBottom: 82,
+    width: '80%',
+  },
+  seeMoreText: {
+    alignSelf: 'center',
     color: '#415a77',
   },
   textField: {
-    borderColor: '#219ebc',
-    borderRadius: 12,
-    borderWidth: 2,
+    borderBottomColor: '#000',
+    borderBottomWidth: 1,
+    height: 45,
     padding: 24,
     width: '85%',
   },
   title: {
-    color: '#219ebc',
+    color: '#000',
     fontSize: 18,
     fontWeight: '700',
   },

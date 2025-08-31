@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import {
   TProductCategory,
   TProductsCategories,
@@ -5,12 +6,21 @@ import {
 import {useCallback} from 'react';
 import {
   FlatList,
+  ImageBackground,
   ListRenderItemInfo,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+
+const categoryImages: {[key: string]: ReturnType<typeof require>} = {
+  Beauty: require('../../../../assets/images/Beauty.jpg'),
+  Fragrances: require('../../../../assets/images/Fragrances.jpg'),
+  Furniture: require('../../../../assets/images/Furniture.jpg'),
+  Groceries: require('../../../../assets/images/Groceries.jpg'),
+  Default: require('../../../../assets/images/category.jpg'),
+};
 
 type TProductCategoriesProps = {
   categories: TProductsCategories | undefined;
@@ -31,10 +41,14 @@ export const CategoriesList = ({
 
   const renderCategoryCard = useCallback(
     ({item}: ListRenderItemInfo<TProductCategory>) => (
-      <TouchableOpacity
-        style={styles.categoryContainer}
-        onPress={() => handleSelectedCategory(item.name)}>
-        <Text style={styles.categoryName}>{item.name}</Text>
+      <TouchableOpacity onPress={() => handleSelectedCategory(item.name)}>
+        <ImageBackground
+          source={categoryImages[item.name] || categoryImages.Default}
+          style={styles.imageBackground}>
+          <View style={styles.categoryNameContainer}>
+            <Text style={styles.categoryName}>{item.name}</Text>
+          </View>
+        </ImageBackground>
       </TouchableOpacity>
     ),
     [handleSelectedCategory],
@@ -59,20 +73,19 @@ const styles = StyleSheet.create({
     gap: 24,
     rowGap: 24,
   },
-  categoryContainer: {
-    alignItems: 'center',
-    backgroundColor: '#84a59d',
-    borderColor: '#415a77',
-    borderRadius: 12,
-    borderWidth: 2,
-    height: 164,
-    justifyContent: 'center',
-    padding: 12,
-    width: '45%',
-  },
   categoryName: {
-    color: '#2b2d42',
+    color: '#fff',
     fontSize: 20,
     fontWeight: 400,
+  },
+  categoryNameContainer: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#000',
+    padding: 12,
+  },
+  imageBackground: {
+    height: 224,
+    justifyContent: 'flex-end',
+    width: 170,
   },
 });

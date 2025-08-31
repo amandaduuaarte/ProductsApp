@@ -42,6 +42,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/no-array-index-key': 'off',
     'react-hooks/exhaustive-deps': 'warn',
+    '@typescript-eslint/naming-convention': 'off'
   },
   settings: {
     react: {
