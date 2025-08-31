@@ -5,13 +5,14 @@ This project includes example videos, technology stack, and setup instructions.
 
 ---
 
+
+
 ## 🎥 Preview
 
 | Feature      | Demo                        |
 | ------------ | --------------------------- |
-| Home Screen  | <video src="https://github.com/user-attachments/assets/249614ac-0407-433b-ab30-3ed3587910d8"/> |
-| Product details | <video src="https://github.com/user-attachments/assets/4b27ac68-2ca7-46e8-ab86-d1384f75bc13"/> |
-| Categories    | <video src="https://github.com/user-attachments/assets/8f378a8f-d564-4016-85c6-b98e83f2f9f8"/> |
+| Home Screen  | <video src="https://github.com/user-attachments/assets/2c22bc43-0c0a-4700-8796-b8ee1d97e54e"/> |
+| Categories    | <video src="https://github.com/user-attachments/assets/edadfab2-3b9d-480d-ac0d-8dee6b30a95f"/> |
 
 
 ---
