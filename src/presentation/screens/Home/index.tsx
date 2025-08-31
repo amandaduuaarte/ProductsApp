@@ -13,7 +13,6 @@ import {
 import {useGetProductsUseCase} from '@domain/useCases/useGetProductsUseCase';
 import {useGetProductsCategoriesUseCase} from '@domain/useCases/useGetProductsCategoriesUseCase';
 
-import {useSearchProductsUseCase} from '@domain/useCases/useSearchProductsUseCase';
 import {useCallback, useRef, useState} from 'react';
 
 import {TStackRoutesProps} from '@presentation/routes/types';
@@ -59,19 +58,10 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
     isLoading: isProductsLoading,
   } = useGetProductsUseCase(sortBy);
 
-  const {searchProducts} = useSearchProductsUseCase(sortBy);
-
   const {navigate} = navigation;
 
   const isError = isProductsError;
   const {getSortBy} = sortByFormatter;
-
-  const handleSearchProducts = useCallback(
-    (value: string) => {
-      searchProducts({search: value});
-    },
-    [searchProducts],
-  );
 
   const navigateToCategoriesScreen = useCallback(() => {
     navigate('Categories');
@@ -113,11 +103,10 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
             <TextInput
               ref={searchInputRef}
               style={styles.textField}
-              onChangeText={handleSearchProducts}
-              placeholder="Fragrances"
-              keyboardType="decimal-pad"
+              placeholder="Type here to search"
               onFocus={navigateToSearchScreen}
             />
+
             <TouchableOpacity onPress={handleFiltersBottomSheet}>
               <Image source={filterIcon} style={styles.filterIcon} />
             </TouchableOpacity>
