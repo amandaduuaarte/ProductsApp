@@ -6,7 +6,6 @@ import {
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
 export const PRODUCTS_QUERY_KEY = 'PRODUCTS_KEY';
-export const PRODUCTS_SEARCHED_QUERY_KEY = 'PRODUCTS_SEARCH_KEY';
 export const PRODUCTS_BY_CATEGORY_QUERY_KEY = 'PRODUCTS_BY_CATEGORY_KEY';
 
 const {getProducts, searchProducts, getProductsByCategory} = getProductsFn();
@@ -19,6 +18,7 @@ export const useGetProductsService = ({orderBy, sortBy}: TSortByProps) =>
 
 export const useSearchProductsService = ({orderBy, sortBy}: TSortByProps) => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: ({search}: {search: TProductsSearchProp}) =>
       searchProducts({search}),

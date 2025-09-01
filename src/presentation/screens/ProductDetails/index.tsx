@@ -4,8 +4,9 @@ import {TStackRoutesProps} from '@presentation/routes/types';
 import {RetryView} from '@presentation/shared/components/retryView';
 import {RouteProp} from '@react-navigation/native';
 
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FavoriteTag} from '@presentation/shared/components/favoriteTag';
+import {useState} from 'react';
 import {LoadingView} from './components/loadingView';
 
 type ProductDetailsScreenRouteProp = RouteProp<
@@ -16,7 +17,17 @@ type ProductDetailsScreenRouteProp = RouteProp<
 type Props = {
   route: ProductDetailsScreenRouteProp;
 };
+
+enum ESelectOption {
+  DESCRIPTION = 'description',
+  STOCK = 'stock',
+  RATING = 'rating',
+}
+
 export const ProductDetails = ({route}: Props) => {
+  const [optionSelected, setOptionSelected] = useState<ESelectOption>(
+    ESelectOption.DESCRIPTION,
+  );
   const {productId} = route.params;
   const {formatterMoney} = formatter;
 
@@ -30,85 +41,133 @@ export const ProductDetails = ({route}: Props) => {
 
   const isLoading = isRefetching || isLoadingProductDetails;
 
+  const isDescription = optionSelected === ESelectOption.DESCRIPTION;
+  const isStock = optionSelected === ESelectOption.STOCK;
+  const isRating = optionSelected === ESelectOption.RATING;
+
   if (isLoading) return <LoadingView />;
 
   if (isError) return <RetryView actionButton={refetch} />;
 
   return (
     <View style={styles.container}>
-      <Image source={{uri: productDetails?.thumbnail}} style={styles.image} />
-
-      <Text style={styles.title} numberOfLines={2}>
-        {productDetails?.title}
-      </Text>
-
-      <Text style={styles.value}>{productDetails?.description}</Text>
-
       <FavoriteTag productId={productDetails?.discountPercentage ?? 0} />
 
-      <View style={styles.priceContainer}>
-        <Text style={styles.price}>
-          {formatterMoney(productDetails?.price ?? 0)}
-        </Text>
+      <View style={styles.header}>
+        <Image source={{uri: productDetails?.thumbnail}} style={styles.image} />
 
-        <View style={styles.availability}>
-          <Text style={styles.label}>Stock availability:</Text>
-          <Text style={styles.value}>{productDetails?.stock}</Text>
+        <View style={styles.headerTexts}>
+          <Text style={styles.title} numberOfLines={1}>
+            {productDetails?.brand}
+          </Text>
+
+          <Text style={styles.title} numberOfLines={1}>
+            {productDetails?.title}
+          </Text>
+
+          <Text style={styles.price} numberOfLines={1}>
+            {formatterMoney(productDetails?.price ?? 0)}
+          </Text>
+
+          <TouchableOpacity onPress={() => {}} style={styles.button}>
+            <Text style={styles.buttonText}> Buy now </Text>
+          </TouchableOpacity>
         </View>
       </View>
 
-      <View style={styles.tag}>
-        <Text style={styles.value}>Brand: {productDetails?.brand}</Text>
+      <View style={styles.tabs}>
+        <TouchableOpacity
+          onPress={() => setOptionSelected(ESelectOption.DESCRIPTION)}>
+          <Text style={styles.label}>Description</Text>
+          {isDescription && <View style={styles.divider} />}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => setOptionSelected(ESelectOption.STOCK)}>
+          <Text style={styles.label}>Stock</Text>
+          {isStock && <View style={styles.divider} />}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => setOptionSelected(ESelectOption.RATING)}>
+          <Text style={styles.label}>Rating</Text>
+          {isRating && <View style={styles.divider} />}
+        </TouchableOpacity>
       </View>
 
-      <View style={styles.tag}>
-        <Text style={styles.label}>Rating:</Text>
+      {isDescription && (
+        <Text style={styles.value}>{productDetails?.description}</Text>
+      )}
+
+      {isStock && <Text style={styles.value}>{productDetails?.stock}</Text>}
+
+      {isRating && (
         <Text style={styles.value}>{productDetails?.rating} ⭐</Text>
-      </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  availability: {
-    backgroundColor: '#cae9ff',
-    borderRadius: 8,
-    flexDirection: 'row',
-    gap: 8,
-    padding: 12,
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#000',
+    height: 31,
+    justifyContent: 'center',
+    width: 97,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '700',
   },
   container: {
     backgroundColor: '#ffffff',
     flex: 1,
-    gap: 12,
-    padding: 24,
+    paddingHorizontal: 12,
+    paddingVertical: 24,
+  },
+  divider: {
+    backgroundColor: '#000',
+    height: 2,
+    marginTop: 5,
+    width: 85,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  headerTexts: {
+    alignContent: 'center',
+    gap: 14,
+    width: '50%',
   },
   image: {
-    alignSelf: 'center',
-    height: 200,
-    width: 200,
+    alignSelf: 'flex-start',
+    height: 155,
+    width: 170,
   },
   label: {
     fontSize: 16,
+    justifyContent: 'center',
+    width: 85,
   },
   price: {
     fontSize: 20,
     fontWeight: '700',
   },
-  priceContainer: {
-    alignItems: 'center',
+  tabs: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  tag: {
-    backgroundColor: '#f7c59f',
-    borderRadius: 8,
-    padding: 12,
+    marginTop: 32,
+    textAlign: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
   },
   value: {
     fontSize: 18,
+    marginTop: 24,
+    textAlign: 'justify',
   },
 });

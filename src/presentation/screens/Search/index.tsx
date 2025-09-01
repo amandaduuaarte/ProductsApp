@@ -1,10 +1,13 @@
 import {TProduct} from '@data/schema/products.schema';
+import {PRODUCTS_QUERY_KEY} from '@data/services/getProductsService';
 import {useGetProductsUseCase} from '@domain/useCases/useGetProductsUseCase';
 import {useSearchProductsUseCase} from '@domain/useCases/useSearchProductsUseCase';
 import {TStackRoutesProps} from '@presentation/routes/types';
+import {RouteProp, useIsFocused} from '@react-navigation/native';
 
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useCallback, useState} from 'react';
+import {useQueryClient} from '@tanstack/react-query';
+import {useCallback, useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -16,16 +19,21 @@ import {
 } from 'react-native';
 
 type SearchNavigationProp = StackNavigationProp<TStackRoutesProps, 'Search'>;
+type SearchRouteProp = RouteProp<TStackRoutesProps, 'Search'>;
 
 type SearchScreenProps = {
   navigation: SearchNavigationProp;
+  route: SearchRouteProp;
 };
-export const Search = ({navigation}: SearchScreenProps) => {
+export const Search = ({navigation, route}: SearchScreenProps) => {
   const [searchValue, setSearchValue] = useState('');
   const {searchProducts} = useSearchProductsUseCase({});
   const {products} = useGetProductsUseCase({});
 
   const {navigate} = navigation;
+  const isFocused = useIsFocused();
+  const queryClient = useQueryClient();
+  const {isFocusOnInput = false} = route?.params || {};
 
   const handleSearchProducts = useCallback(
     (value: string) => {
@@ -49,9 +57,17 @@ export const Search = ({navigation}: SearchScreenProps) => {
     </TouchableOpacity>
   );
 
+  useEffect(() => {
+    if (!isFocused) {
+      setSearchValue('');
+      queryClient.invalidateQueries({queryKey: [PRODUCTS_QUERY_KEY]});
+    }
+  }, [isFocused, queryClient]);
+
   return (
     <View style={styles.container}>
       <TextInput
+        autoFocus={isFocusOnInput}
         value={searchValue}
         onChangeText={handleSearchProducts}
         placeholder="Fragrances"
