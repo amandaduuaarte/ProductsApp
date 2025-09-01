@@ -56,23 +56,29 @@ export const ProductsList = ({route, navigation}: ProductListScreenProps) => {
   const renderProductCard = ({item}: ListRenderItemInfo<TProduct>) => {
     return (
       <TouchableOpacity
-        style={styles.content}
+        style={styles.border}
         onPress={() => handleNavigationToDetailsScreen({id: item.id})}>
-        <Image source={{uri: item.thumbnail}} style={styles.thumbnail} />
-
-        <View style={{width: '70%'}}>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.title}>
-            {item.title}
-          </Text>
-
-          <Text style={styles.price}>{formatterMoney(item.price)}</Text>
+        <View style={{alignSelf: 'flex-end'}}>
           <FavoriteTag productId={item.id} />
-          <Text
-            numberOfLines={2}
-            style={styles.description}
-            ellipsizeMode="tail">
-            {item.description}
-          </Text>
+        </View>
+
+        <View style={styles.content}>
+          <Image source={{uri: item.thumbnail}} style={styles.thumbnail} />
+
+          <View style={{width: '70%'}}>
+            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.title}>
+              {item.title}
+            </Text>
+
+            <Text style={styles.price}>{formatterMoney(item.price)}</Text>
+
+            <Text
+              numberOfLines={2}
+              style={styles.description}
+              ellipsizeMode="tail">
+              {item.description}
+            </Text>
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -96,14 +102,18 @@ export const ProductsList = ({route, navigation}: ProductListScreenProps) => {
 };
 
 const styles = StyleSheet.create({
+  border: {
+    borderColor: '#415a77',
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: 12,
+  },
   container: {
     gap: 24,
     padding: 24,
   },
+
   content: {
-    borderColor: '#415a77',
-    borderRadius: 12,
-    borderWidth: 1,
     flexDirection: 'row',
     paddingVertical: 8,
   },

@@ -24,7 +24,10 @@ import {RetryView} from '@presentation/shared/components/retryView';
 
 import {sortByFormatter} from '@domain/utils/getSortBy';
 import {ProductsCarrousel} from './components/productsCarrousel';
-import {LoadingView} from './components/loadingView';
+import {
+  CarrouselLoadingView,
+  CategoriesLoadingView,
+} from './components/loadingView';
 import {Filters} from './components/filters';
 
 type HomeNavigationProp = StackNavigationProp<TStackRoutesProps, 'Home'>;
@@ -50,7 +53,8 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
     sortBy: filtersApplied ? route.params?.sortBy : undefined,
     orderBy: filtersApplied ? route.params?.orderBy : undefined,
   };
-  const {categories} = useGetProductsCategoriesUseCase(4);
+  const {categories, isLoading: isCategoriesLoading} =
+    useGetProductsCategoriesUseCase(4);
   const {
     products,
     refetch,
@@ -81,7 +85,7 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
   };
 
   const navigateToSearchScreen = () => {
-    navigate('Search');
+    navigate('Search', {isFocusOnInput: true});
     searchInputRef.current?.blur();
   };
 
@@ -89,8 +93,6 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
     sortBy: route.params?.sortBy,
     orderBy: route.params?.orderBy,
   });
-
-  if (isProductsLoading) return <LoadingView />;
 
   if (isError) return <RetryView actionButton={refetch} />;
 
@@ -122,17 +124,25 @@ export const Home = ({route, navigation}: HomeScreenProps) => {
             <Filters label={filterLabel} action={setFiltersApplied} />
           )}
 
-          <ProductsCarrousel products={products} />
+          {isProductsLoading ? (
+            <CarrouselLoadingView />
+          ) : (
+            <ProductsCarrousel products={products} />
+          )}
 
           <View style={styles.categories}>
             <Text style={styles.categoriesText}>Shop by categories</Text>
           </View>
 
-          <CategoriesList
-            scrollEnabled={false}
-            categories={categories?.slice(0, 4)}
-            selectCategory={handleSelectedCategory}
-          />
+          {isCategoriesLoading ? (
+            <CategoriesLoadingView />
+          ) : (
+            <CategoriesList
+              scrollEnabled={false}
+              categories={categories?.slice(0, 4)}
+              selectCategory={handleSelectedCategory}
+            />
+          )}
 
           <TouchableOpacity
             onPress={navigateToCategoriesScreen}

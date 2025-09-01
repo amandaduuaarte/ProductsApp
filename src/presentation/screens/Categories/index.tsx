@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useCallback} from 'react';
 
-import {StyleSheet, View} from 'react-native';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 
 type TCategoriesNavigationProp = StackNavigationProp<
   TStackRoutesProps,
@@ -27,12 +27,14 @@ export const Categories = () => {
   if (isError) return <RetryView actionButton={refetch} />;
 
   return (
-    <View style={styles.container}>
-      <CategoriesList
-        categories={categories}
-        selectCategory={handleSelectedCategory}
-      />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <CategoriesList
+          categories={categories}
+          selectCategory={handleSelectedCategory}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
