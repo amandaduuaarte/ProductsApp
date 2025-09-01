@@ -4,7 +4,6 @@ import {
 } from '@react-navigation/stack';
 
 import {ProductDetails} from '@presentation/screens/ProductDetails';
-import {Categories} from '@presentation/screens/Categories';
 import {ProductsList} from '@presentation/screens/ProductsList';
 import {BottomSheet} from '@presentation/shared/components/bottomSheet';
 
@@ -31,16 +30,6 @@ export const StackRoutes = () => (
       component={ProductDetails}
       options={{
         title: '',
-        headerLeft: renderLeftIcon,
-        headerShown: true,
-      }}
-    />
-    <Stack.Screen
-      name="Categories"
-      component={Categories}
-      options={{
-        title: 'Categories',
-        headerBackTitle: '',
         headerLeft: renderLeftIcon,
         headerShown: true,
       }}

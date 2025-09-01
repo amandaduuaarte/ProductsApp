@@ -9,13 +9,13 @@ import SearchIcon from '@assets/icons/search.svg';
 enum TAB_LABELS {
   Home = 'Home',
   Search = 'Search',
-  Favorites = 'Favorites',
+  Categories = 'Categories',
 }
 
 const renderIcon = (routeName: string) => {
   return (
     <View>
-      {routeName === TAB_LABELS.Favorites && <FavoriteIcon />}
+      {routeName === TAB_LABELS.Categories && <FavoriteIcon />}
       {routeName === TAB_LABELS.Search && <SearchIcon />}
       {routeName === TAB_LABELS.Home && <HomeIcon />}
     </View>
